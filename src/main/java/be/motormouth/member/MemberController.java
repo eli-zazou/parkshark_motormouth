@@ -14,14 +14,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemberController {
-
-    private final MemberService memberService;
-
     @Inject
-    public MemberController(MemberService memberService){
-        this.memberService = memberService;
-    }
-
+    MemberService memberService;
 
     @GET
     public List<MemberDto> getAllMembers(){

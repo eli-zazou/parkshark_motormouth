@@ -5,10 +5,14 @@ import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.entities.Member;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
+@Transactional
 public class MemberService {
 
     private final MemberPanacheRepository memberRepository;

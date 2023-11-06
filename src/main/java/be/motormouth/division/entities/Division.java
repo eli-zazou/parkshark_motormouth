@@ -15,10 +15,35 @@ public class Division {
     private String director;
     @ManyToOne
     @JoinColumn(name = "FK_DIVISION_ID")
-    private Division subDivision;
+    private Division mainDivision;
 
     public Division() {
-
     }
 
+    public Division(String name, String originalName, String director, Division mainDivision) {
+        this.name = name;
+        this.originalName = originalName;
+        this.director = director;
+        this.mainDivision = mainDivision;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public Division getMainDivision() {
+        return mainDivision;
+    }
 }
