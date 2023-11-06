@@ -60,4 +60,4 @@ If you want to modify the class diagram :
 
 Here is class diagram :
 
-![current diagram](parkshark_class_diagram.jpeg)
+![current diagram](parkshark_class_diagram.jpg)
