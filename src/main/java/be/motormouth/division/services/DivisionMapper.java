@@ -21,7 +21,7 @@ public class DivisionMapper {
     public static Division toDivision(DivisionDTO divisionDTO, Division mainDivision){
         return new Division(divisionDTO.name(), divisionDTO.originalName(), divisionDTO.director(), mainDivision);
     }
-    public static ListDivision toList(Division division, List<Division> subdivisions){
-        return new ListDivision(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(), subdivisions);
-    }
+//    public static ListDivision toList(Division division, List<ListDivision> subdivisions){
+//        return new ListDivision(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(), subdivisions);
+//    }
 }

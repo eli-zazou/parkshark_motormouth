@@ -33,19 +33,19 @@ public class DivisionService {
                 .filter((division)-> division.getId() == Long.parseLong(divisionId))
                 .collect(Collectors.toList());
     }
-//    public Collection<ListDivisionDTO> viewAllDivisionsTopDown() {
-//        divisionPanacheRepository.getMainDivisions()
-//                .stream()
-//                .map(division -> listAllSubdivisions(division))
-//                .collect(Collectors.toList());
-//        return;
-//    }
-//    private List<ListDivision> listAllSubdivisions(Division division) {
-//        return divisionPanacheRepository.getSubDivisions(division)
-//                .stream()
-//                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))
-//                .collect(Collectors.toList());
-//    }
+    public Collection<ListDivisionDTO> viewAllDivisionsTopDown() {
+        divisionPanacheRepository.getMainDivisions()
+                .stream()
+                .map(division -> listAllSubdivisions(division))
+                .collect(Collectors.toList());
+        return null;//todo
+    }
+    private List<ListDivision> listAllSubdivisions(Division division) {
+        return divisionPanacheRepository.getSubDivisions(division)
+                .stream()
+                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))
+                .collect(Collectors.toList());
+    }
     public Division viewDivisionsById(String divisionId) {
         return divisionPanacheRepository.findDivisionById(Long.parseLong(divisionId))
                 .orElseThrow(()-> { errorMessage = "Division " + divisionId + " not found";
