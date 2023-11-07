@@ -1,6 +1,7 @@
 package be.motormouth.division;
 
 import be.motormouth.division.dto.DivisionDTO;
+import be.motormouth.division.entities.ListDivision;
 import be.motormouth.division.services.DivisionMapper;
 import be.motormouth.division.services.DivisionService;
 import be.motormouth.security.SecurityService;
@@ -30,6 +31,13 @@ public class DivisionController {
             , @QueryParam("divisionid") @DefaultValue("ALL") String divisionId) {
         User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_DIVISIONS);
         return DivisionMapper.toDTO(divisionService.viewAllDivisions(divisionId));
+    }
+    @GET
+    @Path("/TopDown")
+    @ResponseStatus(200)
+    public Collection<ListDivision> viewAllDivisions(@RestHeader String authorization) {
+        User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_DIVISIONS);
+        return divisionService.viewAllDivisionsTopDown();
     }
     @GET
     @Path("/{id}")

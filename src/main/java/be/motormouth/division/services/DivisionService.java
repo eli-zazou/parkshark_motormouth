@@ -33,7 +33,7 @@ public class DivisionService {
                 .filter((division)-> division.getId() == Long.parseLong(divisionId))
                 .collect(Collectors.toList());
     }
-    public Collection<ListDivisionDTO> viewAllDivisionsTopDown() {
+    public Collection<ListDivision> viewAllDivisionsTopDown() {
         divisionPanacheRepository.getMainDivisions()
                 .stream()
                 .map(division -> listAllSubdivisions(division))
