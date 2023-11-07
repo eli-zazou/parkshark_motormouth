@@ -5,6 +5,8 @@ import be.motormouth.division.services.DivisionMapper;
 import be.motormouth.division.services.DivisionService;
 import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
 import be.motormouth.parkinglot.dtos.ParkingLotDto;
+import be.motormouth.parkinglot.services.ParkingLotMapper;
+import be.motormouth.parkinglot.services.ParkingLotService;
 import be.motormouth.security.SecurityService;
 import be.motormouth.security.users.User;
 import jakarta.inject.Inject;
@@ -23,6 +25,8 @@ import static be.motormouth.security.Feature.*;
 public class DivisionController {
     @Inject
     DivisionService divisionService;
+    @Inject
+    ParkingLotService parkingLotService;
     @Inject
     SecurityService securityService;
 
@@ -56,10 +60,11 @@ public class DivisionController {
         return DivisionMapper.toDTO(divisionService.createDivision(id, divisionDTO));
     }
 
+
+    //to do : authorization
     @POST
     @Path("/{id}/parkinglot")
-    public ParkingLotDto createParkingLot(CreateParkingLotDto parkingLotDto, @PathParam("id")Long divisionId){
-//        return ParkingLotMapper.toDto();
-        return null;
+    public ParkingLotDto createParkingLot(CreateParkingLotDto createParkingLotDto, @PathParam("id")String divisionId){
+        return ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId));
     }
 }

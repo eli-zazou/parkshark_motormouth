@@ -7,8 +7,20 @@ import be.motormouth.parkinglot.entities.ContactPerson;
 public record CreateParkingLotDto(String name,
                                   Category category,
                                   int capacity,
-                                  ContactPerson contactPerson,
+                                  CreateContactPersonDto createContactPersonDto,
                                   Address address,
                                   double pricePerHourInEuro,
                                   int numberOfPlacesAvailable) {
+    @Override
+    public String toString() {
+        return "CreateParkingLotDto{" +
+                "name='" + name + '\'' +
+                ", category=" + category +
+                ", capacity=" + capacity +
+                ", createContactPersonDto=" + createContactPersonDto +
+                ", address=" + address +
+                ", pricePerHourInEuro=" + pricePerHourInEuro +
+                ", numberOfPlacesAvailable=" + numberOfPlacesAvailable +
+                '}';
+    }
 }

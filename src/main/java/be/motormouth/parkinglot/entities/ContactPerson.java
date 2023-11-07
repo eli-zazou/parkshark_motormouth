@@ -21,4 +21,33 @@ public class ContactPerson {
 
     @Embedded
     private Address address;
+
+    public ContactPerson() {
+    }
+
+    public ContactPerson(String phoneNumber,
+                         String mobilePhoneNumber,
+                         String email,
+                         Address address) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
 }

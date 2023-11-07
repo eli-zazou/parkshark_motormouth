@@ -1,5 +1,6 @@
 package be.motormouth.parkinglot.dtos;
 
+import be.motormouth.division.dto.DivisionDTO;
 import be.motormouth.member.entities.Address;
 import be.motormouth.parkinglot.Category;
 import be.motormouth.parkinglot.entities.ContactPerson;
@@ -11,5 +12,6 @@ public record ParkingLotDto(Long id,
                             ContactPerson contactPerson,
                             Address address,
                             double pricePerHourInEuro,
-                            int numberOfPlacesAvailable) {
+                            int numberOfPlacesAvailable,
+                            DivisionDTO divisionDTO) {
 }
