@@ -22,17 +22,13 @@ public class Allocation {
     private String licensePlate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private boolean isActive;
     // TODO do we need status?
 
-    public Allocation(Long id, ParkingLot parkingLot, Member member, String licensePlate, LocalDateTime startTime, LocalDateTime endTime, boolean isActive) {
-        this.id = id;
+    public Allocation(ParkingLot parkingLot, Member member, String licensePlate) {
         this.parkingLot = parkingLot;
         this.member = member;
         this.licensePlate = licensePlate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isActive = isActive;
+        this.startTime = LocalDateTime.now();
     }
 
     protected Allocation() {
@@ -63,7 +59,11 @@ public class Allocation {
         return endTime;
     }
 
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     public boolean isActive() {
-        return isActive;
+        return endTime == null;
     }
 }

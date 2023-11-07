@@ -1,14 +1,5 @@
 package be.motormouth.allocation.dto;
 
-import be.motormouth.member.entities.Member;
-import be.motormouth.parkinglot.entities.ParkingLot;
-
-import java.time.LocalDateTime;
-
-public record CreateAllocationDto(ParkingLot parkingLot,
-                                  Member member,
-                                  String licensePlate,
-                                  LocalDateTime startTime,
-                                  LocalDateTime endTime,
-                                  boolean isActive) {
+public record CreateAllocationDto(Long parkingLotId,
+                                  String licensePlate) {
 }
