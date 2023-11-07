@@ -33,7 +33,6 @@ public class MemberMapper {
                 member.getMembershipLevel());
     }
 
-
     public static List<MemberDto> toDto(List<Member> members){
         return members.stream().map((MemberMapper::toDto))
                 .collect(Collectors.toList());

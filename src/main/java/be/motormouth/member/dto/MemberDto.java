@@ -14,5 +14,5 @@ public record MemberDto(
         String emailAddress,
         Address address,
         String licensePlateNumber,
-        LocalDate registrationDate
-        , MembershipLevel membershipLevel) {}
+        LocalDate registrationDate,
+        MembershipLevel membershipLevel) {}

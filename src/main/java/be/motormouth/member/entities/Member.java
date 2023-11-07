@@ -18,17 +18,19 @@ public class Member {
     private String firstName;
     @Column
     private String lastName;
-    @Column
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column
+    @Column(name = "email_address")
     private String emailAddress;
+
     @Embedded
     private Address address;
     @Embedded
+    @Column
     private LicensePlate licencePlate;
-    @Column
+    @Column(name = "registration_date")
     private LocalDate registrationDate;
-    @Column
+    @Column(name = "membership_level")
     @Enumerated(value = EnumType.STRING)
     private MembershipLevel membershipLevel;
 
