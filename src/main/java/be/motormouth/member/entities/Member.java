@@ -3,6 +3,7 @@ package be.motormouth.member.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "MEMBER")
@@ -17,19 +18,39 @@ public class Member {
     private String firstName;
     @Column
     private String lastName;
-    @Column
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column
+    @Column(name = "email_address")
     private String emailAddress;
+
     @Embedded
     private Address address;
     @Embedded
+    @Column
     private LicensePlate licencePlate;
-    @Column
+    @Column(name = "registration_date")
     private LocalDate registrationDate;
-    @Column
+    @Column(name = "membership_level")
+    @Enumerated(value = EnumType.STRING)
     private MembershipLevel membershipLevel;
 
+    protected Member(){
+        // for JPA
+    }
+
+    // todo make a builder.
+    public Member(String firstName, String lastName, String phoneNumber,
+                  String emailAddress, Address address , LicensePlate licensePlate,
+                  MembershipLevel membershipLevel, LocalDate registrationDate){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.address = address;
+        this.licencePlate = licensePlate;
+        this.registrationDate = registrationDate;
+        this.membershipLevel = membershipLevel;
+    }
 
     public Address getAddress(){
         return this.address;
