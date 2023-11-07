@@ -7,17 +7,17 @@ public class ListDivision {
     private String name;
     private String originalName;
     private String director;
-    private List<Division> subDivisions;
+    private List<ListDivision> subDivisions;
 
     public ListDivision() {
     }
 
-    public ListDivision(long id, String name, String originalName, String director, List<Division> subDivision) {
+    public ListDivision(long id, String name, String originalName, String director, List<ListDivision> subDivisions) {
         this.id = id;
         this.name = name;
         this.originalName = originalName;
         this.director = director;
-        this.subDivisions = subDivision;
+        this.subDivisions = subDivisions;
     }
 
     public long getId() {
@@ -36,7 +36,7 @@ public class ListDivision {
         return director;
     }
 
-    public List<Division> getSubDivisions() {
+    public List<ListDivision> getSubDivisions() {
         return subDivisions;
     }
 }

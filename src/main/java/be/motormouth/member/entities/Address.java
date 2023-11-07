@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 @Embeddable
 public class Address {
 
+
     @Column
     private String streetName;
     @Column
@@ -15,4 +16,23 @@ public class Address {
     private int postalCode;
     @Column
     private String postalLabel;
+
+    public Address() {
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public String getPostalLabel() {
+        return postalLabel;
+    }
 }
