@@ -7,27 +7,27 @@ import be.motormouth.member.entities.MembershipLevel;
 import java.time.LocalDate;
 
 public class CreateMemberDto {
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String emailAddress;
-    private Address address;
-    private LicensePlate licencePlate;
-    private LocalDate registrationDate;
+    private final String firstName;
+    private final String lastName;
+    private final String phoneNumber;
+    private final String emailAddress;
+    private final Address address;
+    private final LicensePlate licensePlate;
+    private final LocalDate registrationDate;
     private MembershipLevel membershipLevel;
-    private String userid;
-    private String password;
+    private final String username;
+    private final String password;
 
-    public CreateMemberDto(String firstName, String lastName, String phoneNumber, String emailAddress, Address address, LicensePlate licencePlate, LocalDate registrationDate, MembershipLevel membershipLevel, String userid, String password) {
+    public CreateMemberDto(String firstName, String lastName, String phoneNumber, String emailAddress, Address address, LicensePlate licensePlate, LocalDate registrationDate, MembershipLevel membershipLevel, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address = address;
-        this.licencePlate = licencePlate;
+        this.licensePlate = licensePlate;
         this.registrationDate = registrationDate;
         this.membershipLevel = membershipLevel;
-        this.userid = userid;
+        this.username = username;
         this.password = password;
     }
 
@@ -51,8 +51,8 @@ public class CreateMemberDto {
         return address;
     }
 
-    public LicensePlate getLicencePlate() {
-        return licencePlate;
+    public LicensePlate getLicensePlate() {
+        return licensePlate;
     }
 
     public LocalDate getRegistrationDate() {
@@ -63,11 +63,15 @@ public class CreateMemberDto {
         return membershipLevel;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setMembershipLevel(MembershipLevel membershipLevel){
+        this.membershipLevel = membershipLevel;
     }
 }

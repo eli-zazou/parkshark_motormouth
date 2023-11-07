@@ -6,15 +6,13 @@ import be.motormouth.member.entities.MembershipLevel;
 
 import java.time.LocalDate;
 
-public record MemberDto(Long id,
-                        String firstName,
-                        String lastName,
-                        String phoneNumber,
-                        String emailAddress,
-                        Address address,
-                        LicensePlate licensePlate,
-                        LocalDate registrationDate,
-                        MembershipLevel membershipLevel
-                        ) {
-
-}
+public record MemberDto(
+        Long id,
+        String firstName,
+        String lastName,
+        String phoneNumber,
+        String emailAddress,
+        Address address,
+        String licensePlateNumber,
+        LocalDate registrationDate,
+        MembershipLevel membershipLevel) {}

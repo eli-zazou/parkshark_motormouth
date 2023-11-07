@@ -2,7 +2,6 @@ package be.motormouth.division.services;
 
 import be.motormouth.division.DivisionPanacheRepository;
 import be.motormouth.division.dto.DivisionDTO;
-import be.motormouth.division.dto.ListDivisionDTO;
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.entities.ListDivision;
 import be.motormouth.exceptions.UnknownDivisionException;
@@ -33,14 +32,13 @@ public class DivisionService {
                 .filter((division)-> division.getId() == Long.parseLong(divisionId))
                 .collect(Collectors.toList());
     }
-//    public Collection<ListDivisionDTO> viewAllDivisionsTopDown() {
-//        divisionPanacheRepository.getMainDivisions()
+//    public List<ListDivision> viewAllDivisionsTopDown() {
+//        return divisionPanacheRepository.getMainDivisions()
 //                .stream()
 //                .map(division -> listAllSubdivisions(division))
 //                .collect(Collectors.toList());
-//        return;
 //    }
-//    private List<ListDivision> listAllSubdivisions(Division division) {
+//    private ListDivision listAllSubdivisions(Division division) {
 //        return divisionPanacheRepository.getSubDivisions(division)
 //                .stream()
 //                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))

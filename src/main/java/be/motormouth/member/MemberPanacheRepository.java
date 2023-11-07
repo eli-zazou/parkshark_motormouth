@@ -1,10 +1,14 @@
 package be.motormouth.member;
 
+import be.motormouth.member.dto.CreateMemberDto;
+import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.entities.Member;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
+import java.util.Optional;
+
 @ApplicationScoped
 public class MemberPanacheRepository implements PanacheRepository<Member> {
 
@@ -12,4 +16,12 @@ public class MemberPanacheRepository implements PanacheRepository<Member> {
         return findAll().list();
     }
 
+    public void createMember(Member member){
+         persist(member);
+    }
+
+
+    public Optional<Member> getMemberById(Long id) {
+        return Optional.ofNullable(findById(id));
+    }
 }
