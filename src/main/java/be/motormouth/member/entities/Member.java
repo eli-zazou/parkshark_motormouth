@@ -3,6 +3,7 @@ package be.motormouth.member.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "MEMBER")
@@ -30,6 +31,23 @@ public class Member {
     @Column
     private MembershipLevel membershipLevel;
 
+    protected Member(){
+        // for JPA
+    }
+
+    // todo make a builder.
+    public Member(String firstName, String lastName, String phoneNumber,
+                  String emailAddress, Address address , LicensePlate licensePlate,
+                  MembershipLevel membershipLevel, LocalDate registrationDate){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.address = address;
+        this.licencePlate = licensePlate;
+        this.registrationDate = registrationDate;
+        this.membershipLevel = membershipLevel;
+    }
 
     public Address getAddress(){
         return this.address;
