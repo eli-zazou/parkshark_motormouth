@@ -15,8 +15,8 @@ public class DivisionMapper {
         return divisions.stream().map(DivisionMapper::toDTO).collect(Collectors.toList());
     }
     public static DivisionDTO toDTO(Division division){
-        if (division.getMainDivision() == null) return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(),null);
-        return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(), DivisionMapper.toDTO(division.getMainDivision()));
+        if (division.getParentDivision() == null) return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(),null);
+        return new DivisionDTO(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(), DivisionMapper.toDTO(division.getParentDivision()));
     }
     public static Division toDivision(DivisionDTO divisionDTO, Division mainDivision){
         return new Division(divisionDTO.name(), divisionDTO.originalName(), divisionDTO.director(), mainDivision);
