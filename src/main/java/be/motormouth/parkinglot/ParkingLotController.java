@@ -1,5 +1,7 @@
 package be.motormouth.parkinglot;
 
+import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
+import be.motormouth.parkinglot.dtos.ParkingLotDto;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
@@ -22,8 +24,8 @@ public class ParkingLotController {
         return null;
     }
 
-    @POST
-    public String createParkingLot(CreateParkingLotDto parkingLotDto){
-        return null;
-    }
+//    @POST
+//    public String createParkingLot(CreateParkingLotDto parkingLotDto){
+//        return null;
+//    }
 }
