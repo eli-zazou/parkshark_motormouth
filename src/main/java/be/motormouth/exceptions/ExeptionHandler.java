@@ -14,4 +14,9 @@ public class ExeptionHandler {
     public RestResponse<String> NotFoundException(RuntimeException ex) {
         return RestResponse.status(Response.Status.NOT_FOUND, ex.getMessage());
     }
+
+    @ServerExceptionMapper(value = {UnmatchedLicensePlateException.class, OutOfCapacityParkingLotException.class})
+    public RestResponse<String> forbiddenException(RuntimeException ex) {
+        return RestResponse.status(Response.Status.FORBIDDEN, ex.getMessage());
+    }
 }

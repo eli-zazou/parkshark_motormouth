@@ -30,4 +30,12 @@ public class ParkingLot {
 
     @Column(name = "NUMBER_OF_PLACES_AVAILABLE")
     private int numberOfPlacesAvailable;
+
+    public int getNumberOfPlacesAvailable() {
+        return numberOfPlacesAvailable;
+    }
+
+    public void setNumberOfPlacesAvailable(int numberOfPlacesAvailable) {
+        this.numberOfPlacesAvailable = numberOfPlacesAvailable;
+    }
 }

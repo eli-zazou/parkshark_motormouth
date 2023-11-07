@@ -18,7 +18,7 @@ public class ParkingLotService {
         return parkingLotRepository.findByIdOptional(id)
                 .orElseThrow(() -> {
                     errorMessage = "Parking lot " + id.toString() + " not found";
-                    logger.errorf(errorMessage);
+                    logger.info(errorMessage);
                     return new UnknownParkingLotException(errorMessage);
                 });
     }
