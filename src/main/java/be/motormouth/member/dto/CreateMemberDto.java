@@ -13,6 +13,7 @@ public record CreateMemberDto (String firstName,
                                Address address,
                                LicensePlate licensePlate,
                                MembershipLevel membershipLevel,
+                               String username,
                                String password
 ) {
 }
