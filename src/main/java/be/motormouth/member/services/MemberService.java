@@ -5,8 +5,11 @@ import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.entities.Member;
+import be.motormouth.member.entities.MembershipLevel;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Response;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,29 +32,38 @@ public class MemberService {
         return memberRepository.getAllMembers();
     }
 
-    public MemberDto getMemberById(String id) {
-        throw new RuntimeException("Not Implemented");
+    public Member getMemberById(Long id) {
+        return memberRepository.getMemberById(id)
+                .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member " + id + " not Found").build()));
     }
 
     public Member createMember(CreateMemberDto createMemberDto) throws IllegalArgumentException {
         if (createMemberDto == null) {
             throw new IllegalArgumentException("Member to create not provided");
         }
-        if(createMemberDto.firstName()== null || createMemberDto.firstName().isEmpty()){
+        if(createMemberDto.getFirstName()== null || createMemberDto.getFirstName().isEmpty()){
             throw new IllegalArgumentException("Firstname not provided.");
         }
-        if(createMemberDto.lastName() == null || createMemberDto.lastName().isEmpty()){
+        if(createMemberDto.getLastName() == null || createMemberDto.getLastName().isEmpty()){
             throw new IllegalArgumentException("Lastname not provided.");
         }
-        validateEmail(createMemberDto.emailAddress());
-        if (createMemberDto.licensePlate() == null){
+        validateEmail(createMemberDto.getEmailAddress());
+        if (createMemberDto.getLicensePlate() == null){
             throw new IllegalArgumentException("Licence Plate not provided.");
         }
-        if (createMemberDto.address() == null){
+        if (createMemberDto.getAddress() == null){
             throw new IllegalArgumentException("Address not provided.");
         }
-        if (createMemberDto.phoneNumber() == null){
+        if (createMemberDto.getPhoneNumber() == null){
             throw new IllegalArgumentException("Phone Number not provided.");
+        }
+        if( createMemberDto.getMembershipLevel() == null){
+            createMemberDto.setMembershipLevel(MembershipLevel.BRONZE);
+        }
+        try {
+            MembershipLevel.valueOf(String.valueOf(createMemberDto.getMembershipLevel()));
+        }catch (IllegalArgumentException exception){
+            throw new IllegalArgumentException("Invalid Membership Level provided.");
         }
         Member memberToRegister = MemberMapper.toEntity(createMemberDto);
         memberRepository.createMember( memberToRegister);

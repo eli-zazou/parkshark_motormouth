@@ -8,4 +8,7 @@ public class LicensePlate {
     private String licensePlateNumber;
     private String issuingCountry;
 
+    public java.lang.String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
 }

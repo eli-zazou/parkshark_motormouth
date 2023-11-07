@@ -29,6 +29,7 @@ public class Member {
     @Column
     private LocalDate registrationDate;
     @Column
+    @Enumerated(value = EnumType.STRING)
     private MembershipLevel membershipLevel;
 
     protected Member(){

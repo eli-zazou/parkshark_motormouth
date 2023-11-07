@@ -16,6 +16,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MemberController {
+
     @Inject
     MemberService memberService;
 
@@ -24,10 +25,10 @@ public class MemberController {
         return MemberMapper.toDto(memberService.getAllMembers());
     }
 
-    @Path("{id}")
+    @Path("/{id}")
     @GET
-    public MemberDto getMemberById (@PathParam("id") String id){
-        return memberService.getMemberById(id);
+    public MemberDto getMemberById (@PathParam("id") Long id){
+        return MemberMapper.toDto(memberService.getMemberById(id));
     }
 
     @POST

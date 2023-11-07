@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 public class MemberMapper {
 
     public static Member toEntity(CreateMemberDto createMemberDto) {
-        return new Member(createMemberDto.firstName(),
-                createMemberDto.lastName(),
-                createMemberDto.phoneNumber(),
-                createMemberDto.emailAddress(),
-                createMemberDto.address(),
-                createMemberDto.licensePlate(),
-                createMemberDto.membershipLevel(),
+        return new Member(createMemberDto.getFirstName(),
+                createMemberDto.getLastName(),
+                createMemberDto.getPhoneNumber(),
+                createMemberDto.getEmailAddress(),
+                createMemberDto.getAddress(),
+                createMemberDto.getLicensePlate(),
+                createMemberDto.getMembershipLevel(),
                 LocalDate.now());
     }
 
@@ -28,7 +28,7 @@ public class MemberMapper {
                 member.getPhoneNumber(),
                 member.getEmailAddress(),
                 member.getAddress(),
-                member.getLicencePlate(),
+                member.getLicencePlate().getLicensePlateNumber(),
                 member.getRegistrationDate(),
                 member.getMembershipLevel());
     }

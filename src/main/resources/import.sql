@@ -10,3 +10,4 @@ insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Sub Level 1b', 'Original Sub Level 1b', 'Director Lvl1b', 1);
 insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Sub Level 2', 'Original Sub Level 2', 'Director Lvl2', 2);
+
