@@ -45,7 +45,7 @@ public class AllocationService {
 
     private void validateLicensePlate(String licensePlate, Member member) {
         if (member.getMembershipLevel() != MembershipLevel.GOLD
-                && !licensePlate.equals(member.getLicencePlate().getLicensePlateNumber())) {
+                && !licensePlate.equalsIgnoreCase(member.getLicencePlate().getLicensePlateNumber())) {
             errorMessage = String.format("This license plate number %s does not match the members licence plate number %s." +
                     "Only gold members may use a different license plate number.", licensePlate, member.getLicencePlate().getLicensePlateNumber());
             logger.info(errorMessage);
