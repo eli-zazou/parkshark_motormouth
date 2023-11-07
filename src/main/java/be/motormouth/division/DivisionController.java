@@ -32,13 +32,13 @@ public class DivisionController {
         User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_DIVISIONS);
         return DivisionMapper.toDTO(divisionService.viewAllDivisions(divisionId));
     }
-    @GET
-    @Path("/TopDown")
-    @ResponseStatus(200)
-    public Collection<ListDivision> viewAllDivisions(@RestHeader String authorization) {
-        User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_DIVISIONS);
-        return divisionService.viewAllDivisionsTopDown();
-    }
+//    @GET
+//    @Path("/TopDown")
+//    @ResponseStatus(200)
+//    public Collection<ListDivision> viewAllDivisions(@RestHeader String authorization) {
+//        User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_DIVISIONS);
+//        return divisionService.viewAllDivisionsTopDown();
+//    }
     @GET
     @Path("/{id}")
     @ResponseStatus(200)

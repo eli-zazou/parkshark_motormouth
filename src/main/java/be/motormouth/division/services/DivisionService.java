@@ -2,7 +2,6 @@ package be.motormouth.division.services;
 
 import be.motormouth.division.DivisionPanacheRepository;
 import be.motormouth.division.dto.DivisionDTO;
-import be.motormouth.division.dto.ListDivisionDTO;
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.entities.ListDivision;
 import be.motormouth.exceptions.UnknownDivisionException;
@@ -33,19 +32,18 @@ public class DivisionService {
                 .filter((division)-> division.getId() == Long.parseLong(divisionId))
                 .collect(Collectors.toList());
     }
-    public Collection<ListDivision> viewAllDivisionsTopDown() {
-        divisionPanacheRepository.getMainDivisions()
-                .stream()
-                .map(division -> listAllSubdivisions(division))
-                .collect(Collectors.toList());
-        return null;//todo
-    }
-    private List<ListDivision> listAllSubdivisions(Division division) {
-        return divisionPanacheRepository.getSubDivisions(division)
-                .stream()
-                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))
-                .collect(Collectors.toList());
-    }
+//    public List<ListDivision> viewAllDivisionsTopDown() {
+//        return divisionPanacheRepository.getMainDivisions()
+//                .stream()
+//                .map(division -> listAllSubdivisions(division))
+//                .collect(Collectors.toList());
+//    }
+//    private ListDivision listAllSubdivisions(Division division) {
+//        return divisionPanacheRepository.getSubDivisions(division)
+//                .stream()
+//                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))
+//                .collect(Collectors.toList());
+//    }
     public Division viewDivisionsById(String divisionId) {
         return divisionPanacheRepository.findDivisionById(Long.parseLong(divisionId))
                 .orElseThrow(()-> { errorMessage = "Division " + divisionId + " not found";
