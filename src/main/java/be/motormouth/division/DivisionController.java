@@ -3,6 +3,8 @@ package be.motormouth.division;
 import be.motormouth.division.dto.DivisionDTO;
 import be.motormouth.division.services.DivisionMapper;
 import be.motormouth.division.services.DivisionService;
+import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
+import be.motormouth.parkinglot.dtos.ParkingLotDto;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -46,5 +48,12 @@ public class DivisionController {
             , DivisionDTO divisionDTO) {
         //User connectedUser = securityService.validateAuthorization(authorization, CREATE_DIVISION);
         return DivisionMapper.toDTO(divisionService.createDivision(id, divisionDTO));
+    }
+
+    @POST
+    @Path("/{id}/parkinglot")
+    public ParkingLotDto createParkingLot(CreateParkingLotDto parkingLotDto, @PathParam("id")Long divisionId){
+//        return ParkingLotMapper.toDto();
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package be.motormouth.allocation.entities;
 
 import be.motormouth.member.entities.Member;
-import be.motormouth.parkinglot.ParkingLot;
+import be.motormouth.parkinglot.entities.ParkingLot;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

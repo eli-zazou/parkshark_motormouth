@@ -1,6 +1,8 @@
-package be.motormouth.parkinglot;
+package be.motormouth.parkinglot.dtos;
 
 import be.motormouth.member.entities.Address;
+import be.motormouth.parkinglot.Category;
+import be.motormouth.parkinglot.entities.ContactPerson;
 
 public record CreateParkingLotDto(String name,
                                   Category category,

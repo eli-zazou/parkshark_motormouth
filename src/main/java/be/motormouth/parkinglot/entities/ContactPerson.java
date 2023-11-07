@@ -1,4 +1,4 @@
-package be.motormouth.parkinglot;
+package be.motormouth.parkinglot.entities;
 
 import be.motormouth.member.entities.Address;
 import jakarta.persistence.*;
