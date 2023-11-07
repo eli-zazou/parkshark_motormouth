@@ -15,8 +15,14 @@ public class DivisionPanacheRepository implements PanacheRepository<Division> {
     public Collection<Division> getAllDivisions() {
         return listAll();
     }
+//    public Collection<Division> getMainDivisions() {
+//        return find("mainDivision = ?1", null);
+//    }
+//    public Collection<Division> getSubDivisions(Division division) {
+//        return find("mainDivision = ?1", division.getId());
+//    }
     public Optional<Division> findDivisionById(Long id) {
-        return Optional.ofNullable(findById(id));
+        return findByIdOptional(id);
     }
     public Division createDivision(Division division) {
         persist(division);
