@@ -6,10 +6,16 @@ import be.motormouth.parkinglot.entities.ContactPerson;
 
 public class ContactPersonMapper {
     public static ContactPerson toEntity(CreateContactPersonDto createContactPersonDto){
-        return new ContactPerson(createContactPersonDto.phoneNumber(),
+        ContactPerson contactPerson = new ContactPerson(createContactPersonDto.phoneNumber(),
                 createContactPersonDto.mobilePhoneNumber(),
                 createContactPersonDto.email(),
                 createContactPersonDto.address());
+//        ContactPerson contactPerson = new ContactPerson();
+//        contactPerson.setPhoneNumber(createContactPersonDto.phoneNumber());
+//        contactPerson.setMobilePhoneNumber(createContactPersonDto.mobilePhoneNumber());
+//        contactPerson.setEmail(createContactPersonDto.email());
+//        contactPerson.setAddress(createContactPersonDto.address());
+        return contactPerson;
     }
 
     public static ContactPersonDto toDto(ContactPerson contactPerson){
