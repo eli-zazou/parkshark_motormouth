@@ -17,7 +17,14 @@ public class Address {
     @Column
     private String postalLabel;
 
-    public Address() {
+    protected Address() {
+    }
+
+    public Address(String streetName, String streetNumber, int postalCode, String postalLabel) {
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.postalCode = postalCode;
+        this.postalLabel = postalLabel;
     }
 
     public String getStreetName() {

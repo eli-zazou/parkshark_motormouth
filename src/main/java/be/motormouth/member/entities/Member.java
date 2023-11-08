@@ -89,6 +89,12 @@ public class Member {
         return membershipLevel;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
