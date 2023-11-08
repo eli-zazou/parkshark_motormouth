@@ -10,6 +10,6 @@ import java.nio.charset.StandardCharsets;
 @ApplicationScoped
 public class UserMapper {
     public User toUser(CreateMemberDto createMemberDto, UserRole userRole, Member member){
-        return new User(createMemberDto.getUserid().toLowerCase(), Hashing.sha256().hashString(createMemberDto.getPassword(), StandardCharsets.UTF_8).toString(), userRole, member);
+        return new User(createMemberDto.getUsername().toLowerCase(), Hashing.sha256().hashString(createMemberDto.getPassword(), StandardCharsets.UTF_8).toString(), userRole, member);
     }
 }
