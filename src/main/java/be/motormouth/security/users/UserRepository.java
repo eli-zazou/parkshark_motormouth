@@ -19,13 +19,13 @@ public class UserRepository implements PanacheRepository<User> {
     public String validateUser(String user) {
         if (user == null || user.isEmpty()) {
             String msg = "User not filled in";
-            logger.errorf(msg);
+            logger.info(msg);
             throw new IllegalArgumentException(msg);
         }
         Optional<User> result = checkUserId(user);
         if (result.isPresent()) {
             String msg = "User " + user + " not unique";
-            logger.errorf(msg);
+            logger.info(msg);
             throw new IllegalArgumentException(msg);
         }
         return user;

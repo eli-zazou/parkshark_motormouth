@@ -32,12 +32,12 @@ public class SecurityService {
                 .orElseThrow(UnknownUserException::new);
 
         if (!user.doesPasswordMatch(credentials.getPassword())) {
-            logger.errorf("Password does not match for user %s", credentials.getUsername());
+            logger.infof("Password does not match for user %s", credentials.getUsername());
             throw new WrongPasswordException();
         }
 
         if (!user.canHaveAccessTo(feature)) {
-            logger.errorf(format("User %s does not have access to %s", credentials.getUsername(), feature));
+            logger.infof(format("User %s does not have access to %s", credentials.getUsername(), feature));
             throw new UnauthorizatedException();
         }
         return user;

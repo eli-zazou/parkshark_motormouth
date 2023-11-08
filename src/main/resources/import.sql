@@ -12,32 +12,30 @@ insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Sub Level 2', 'Original Sub Level 2', 'Director Lvl2', 2);
 --Member
 insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
+                   email_address, license_plate_number, issuing_country, registration_date, membership_level,
+                   streetName, streetNumber, postalCode, postalLabel)
 values (nextval('member_seq'), 'Zineb', 'El tuti', '0123456789',
         'zineb.eltuti@mc.be', '1-ABC-111', 'BE', '2023-11-07', 'BRONZE', 'chien vert', '17', 1150, 'Woluwe St Pierre');
 insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
+                   email_address, license_plate_number, issuing_country, registration_date, membership_level,
+                   streetName, streetNumber, postalCode, postalLabel)
 values (nextval('member_seq'), 'Eli', 'kovic', '0987415266',
         'eli.kovic@mc.be', '1-BBB-111', 'BE', '2023-11-07', 'GOLD', 'chien rouge', '18', 1200, 'Woluwe St lambert');
 insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
+                   email_address, license_plate_number, issuing_country, registration_date, membership_level,
+                   streetName, streetNumber, postalCode, postalLabel)
 values (nextval('member_seq'), 'aaa', 'bbb', '0123456789',
         'aaa.bbb@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
 --User
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member',2);
--- ContactPerson
-insert into contact_person(id,
-                           phone_number,
-                           mobile_phone_number,
-                           email,
-                           streetname,
-                           streetnumber,
-                           postalcode,
-                           postallabel)
-values(nextval('contact_person_seq'), '024568736', '0465789632', 'aaa@aaa.aaa', 'Again street', '65', '1000', 'Brussels');
+insert into users(id, password, role, user_id, fk_member_id)
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MANAGER', 'admin',
+        1);
+insert into users(id, password, role, user_id, fk_member_id)
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'goldmember',
+        2);
+insert into users(id, password, role, user_id, fk_member_id)
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'silvermember',
+        3);
 
 insert into contact_person(id,
                            phone_number,
@@ -47,7 +45,8 @@ insert into contact_person(id,
                            streetnumber,
                            postalcode,
                            postallabel)
-values(nextval('contact_person_seq'), '024568737', '0465789633', 'bbb@bbb.bbb', 'Not again street', '66', '1001', 'Ghent');
+values (nextval('contact_person_seq'), '024568736', '0465789632', 'aaa@aaa.aaa', 'Again street', '65', '1000',
+        'Brussels');
 
 insert into contact_person(id,
                            phone_number,
@@ -57,9 +56,22 @@ insert into contact_person(id,
                            streetnumber,
                            postalcode,
                            postallabel)
-values(nextval('contact_person_seq'), '024568738', '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002', 'Antwerp');
+values (nextval('contact_person_seq'), '024568737', '0465789633', 'bbb@bbb.bbb', 'Not again street', '66', '1001',
+        'Ghent');
 
--- ParkingLot
+insert into contact_person(id,
+                           phone_number,
+                           mobile_phone_number,
+                           email,
+                           streetname,
+                           streetnumber,
+                           postalcode,
+                           postallabel)
+values (nextval('contact_person_seq'), '024568738', '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002',
+        'Antwerp');
+
+
+
 insert into parking_lot(id,
                         name,
                         capacity,
