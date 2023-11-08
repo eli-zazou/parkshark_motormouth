@@ -26,4 +26,7 @@ public class MemberPanacheRepository implements PanacheRepository<Member> {
     public Optional<Member> getMemberById(Long id) {
         return Optional.ofNullable(findById(id));
     }
+    public Optional<Member> getMemberByEmail(String email){
+        return find("emailAddress", email).singleResultOptional();
+    }
 }

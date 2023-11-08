@@ -1,24 +1,21 @@
 package be.motormouth.member.services;
 
-
 import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
-import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
-import be.motormouth.parkinglot.services.ParkingLotService;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 @ApplicationScoped
 @Transactional
@@ -39,7 +36,7 @@ public class MemberService {
 
     public Member getMemberById(Long id) {
         return memberRepository.getMemberById(id)
-                .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member " + id + " not Found").build()));
+                .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member with: " + id + " not Found").build()));
     }
 
     public Member createMember(CreateMemberDto createMemberDto) throws IllegalArgumentException {
