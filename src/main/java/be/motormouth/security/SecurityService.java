@@ -26,7 +26,6 @@ public class SecurityService {
     }
 
     public User validateAuthorization(@Nullable String authorization, Feature feature) {
-        logger.info("Auth =" + authorization);
         DecodedCredentials credentials = getUsernamePassword(Optional.ofNullable(authorization)
                 .orElseThrow(UnauthorizatedException::new));
         User user = userRepository.checkUserId(credentials.getUsername())
