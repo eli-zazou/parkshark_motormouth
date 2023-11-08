@@ -54,4 +54,15 @@ public class Division {
     public Division getParentDivision() {
         return parentDivision;
     }
+
+    @Override
+    public String toString() {
+        return "Division{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", director='" + director + '\'' +
+                ", parentDivision=" + parentDivision +
+                '}';
+    }
 }
