@@ -27,6 +27,14 @@ public class Division {
         this.parentDivision = parentDivision;
     }
 
+    public Division(long id, String name, String originalName, String director, Division parentDivision) {
+        this.id = id;
+        this.name = name;
+        this.originalName = originalName;
+        this.director = director;
+        this.parentDivision = parentDivision;
+    }
+
     public long getId() {
         return id;
     }
@@ -45,5 +53,16 @@ public class Division {
 
     public Division getParentDivision() {
         return parentDivision;
+    }
+
+    @Override
+    public String toString() {
+        return "Division{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", director='" + director + '\'' +
+                ", parentDivision=" + parentDivision +
+                '}';
     }
 }
