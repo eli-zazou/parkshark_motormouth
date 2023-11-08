@@ -87,4 +87,10 @@ public class Member {
     public MembershipLevel getMembershipLevel() {
         return membershipLevel;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+
 }
