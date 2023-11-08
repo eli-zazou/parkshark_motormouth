@@ -1,4 +1,4 @@
-package be.motormouth;
+package be.motormouth.division;
 
 import be.motormouth.division.DivisionPanacheRepository;
 import be.motormouth.division.dto.DivisionDTO;
