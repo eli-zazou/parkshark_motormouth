@@ -47,7 +47,7 @@ public class DivisionService {
     public Division viewDivisionsById(String divisionId) {
         return divisionPanacheRepository.findDivisionById(Long.parseLong(divisionId))
                 .orElseThrow(()-> { errorMessage = "Division " + divisionId + " not found";
-                    logger.errorf(errorMessage);
+                    logger.info(errorMessage);
                     return new UnknownDivisionException(errorMessage);
                 });
     }
