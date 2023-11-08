@@ -29,7 +29,7 @@ public class MemberController {
 
     @GET
     public List<MemberDto> getAllMembers(@RestHeader String authorization){
-       securityService.validateAuthorization(authorization, VIEW_ALL_MEMBERS);
+       //securityService.validateAuthorization(authorization, VIEW_ALL_MEMBERS);
         return MemberMapper.toDto(memberService.getAllMembers());
     }
 
@@ -37,7 +37,7 @@ public class MemberController {
     @ResponseStatus(200)
     @Path("/{id}")
     public MemberDto getMemberById (@RestHeader String authorization, @PathParam("id") Long id){
-        securityService.validateAuthorization(authorization, VIEW_A_MEMBER);
+        //securityService.validateAuthorization(authorization, VIEW_A_MEMBER);
         return MemberMapper.toDto(memberService.getMemberById(id));
     }
 
