@@ -33,6 +33,14 @@ public class User {
         this.member = member;
     }
 
+    public User(long id, String userId, String password, UserRole userRole, Member member) {
+        this.id = id;
+        this.userId = userId;
+        this.password = password;
+        this.userRole = userRole;
+        this.member = member;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -57,4 +65,14 @@ public class User {
         return this.password.equals(password);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole=" + userRole +
+                ", member=" + member +
+                '}';
+    }
 }
