@@ -30,6 +30,8 @@ public class AllocationService {
     }
 
     public Allocation startAllocation(CreateAllocationDto createAllocationDto, User connectedUser) {
+        validateFilledIn(createAllocationDto);
+
         ParkingLot parkingLot = parkingLotService.getParkingLot(createAllocationDto.parkingLotId());
         Member member = connectedUser.getMember();
 
@@ -41,6 +43,7 @@ public class AllocationService {
                 member,
                 createAllocationDto.licensePlate()
         );
+
         return allocationPanacheRepository.createAllocation(allocation);
     }
 
@@ -63,6 +66,24 @@ public class AllocationService {
 
     public Collection<Allocation> viewAllAllocations() {
         return allocationPanacheRepository.getAllAllocations();
+    }
+
+    private void validateFilledIn(CreateAllocationDto createAllocationDto) {
+        if (createAllocationDto == null) {
+            errorMessage = "Please provide an allocation";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        if (createAllocationDto.parkingLotId() == null) {
+            errorMessage = "Please provide a parking lot id";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        if (createAllocationDto.licensePlate() == null) {
+            errorMessage = "Please provide a license plate number";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
 
     private void validateLicensePlate(String licensePlate, Member member) {

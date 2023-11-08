@@ -19,4 +19,9 @@ public class ExeptionHandler {
     public RestResponse<String> forbiddenException(RuntimeException ex) {
         return RestResponse.status(Response.Status.FORBIDDEN, ex.getMessage());
     }
+
+    @ServerExceptionMapper(value = {IllegalArgumentException.class})
+    public RestResponse<String> badRequestException(RuntimeException ex) {
+        return RestResponse.status(Response.Status.BAD_REQUEST, ex.getMessage());
+    }
 }
