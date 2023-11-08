@@ -60,6 +60,7 @@ class MemberServiceTest {
                 new Address("EuroStreet", "11", 3000, "Leuven"), new LicensePlate("1-HUY528","NL"),  LocalDate.now(), MembershipLevel.SILVER, "username", "password");
 
         memberService.createMember(newMemberDto);
+
         Member newMember = MemberMapper.toEntity(newMemberDto);
 
         Optional<Member> getNewMember = memberRepository.getMemberByEmail("carmen@email.be");
