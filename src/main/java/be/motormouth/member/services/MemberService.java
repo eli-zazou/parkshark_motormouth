@@ -39,7 +39,49 @@ public class MemberService {
                 .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member with: " + id + " not Found").build()));
     }
 
-    public Member createMember(CreateMemberDto createMemberDto) throws IllegalArgumentException {
+    public Member createMember(CreateMemberDto createMemberDto){
+
+        validateInput(createMemberDto);
+
+        Member memberToRegister = MemberMapper.toEntity(createMemberDto);
+        memberRepository.createMember( memberToRegister);
+        logger.info("Member created successfully");
+
+        return memberToRegister;
+    }
+
+    public boolean isValidEmail(String email) {
+        String EMAIL_REGEX =
+                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    private String validateEmail(String email) throws IllegalArgumentException {
+        if (email == null || email.trim().isEmpty()) {
+            errorMessage= "Email address cannot be empty or null.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        List<Member>  allMembers = memberRepository.getAllMembers();
+        Optional<Member> result = allMembers.stream()
+                .filter(e -> e.getEmailAddress().equalsIgnoreCase(email))
+                .findFirst();
+        if (result.isPresent()) {
+            errorMessage="Email " + email + " not unique";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        if (!isValidEmail(email)) {
+            errorMessage = "Email " + email + " not valid";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return email;
+    }
+
+    private  void  validateInput(CreateMemberDto createMemberDto){
         if (createMemberDto == null) {
             errorMessage = "Member to create not provided";
             logger.info(errorMessage);
@@ -88,44 +130,9 @@ public class MemberService {
             logger.info(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
-
-        Member memberToRegister = MemberMapper.toEntity(createMemberDto);
-        memberRepository.createMember( memberToRegister);
-        logger.info("Member created successfully");
-
-        return memberToRegister;
     }
 
-    public boolean isValidEmail(String email) {
-        String EMAIL_REGEX =
-                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
-    public String validateEmail(String email) throws IllegalArgumentException {
-        if (email == null || email.trim().isEmpty()) {
-            errorMessage= "Email address cannot be empty or null.";
-            logger.info(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-        List<Member>  allMembers = memberRepository.getAllMembers();
-        Optional<Member> result = allMembers.stream()
-                .filter(e -> e.getEmailAddress().equalsIgnoreCase(email))
-                .findFirst();
-        if (result.isPresent()) {
-            errorMessage="Email " + email + " not unique";
-            logger.info(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-        if (!isValidEmail(email)) {
-            errorMessage = "Email " + email + " not valid";
-            logger.info(errorMessage);
-            throw new IllegalArgumentException(errorMessage);
-        }
-        return email;
-    }
 
 
 
