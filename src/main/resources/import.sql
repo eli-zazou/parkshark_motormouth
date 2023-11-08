@@ -28,22 +28,7 @@ insert into users(id,password,role,user_id,fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);
 insert into users(id,password,role,user_id,fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member',2);
-
-
-
-insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'Zineb', 'El tuti', '0123456789',
-        'zineb.eltuti@mc.be', '1-ABC-111', 'BE', '2023-11-07', 'BRONZE', 'chien vert', '17', 1150, 'Woluwe St Pierre');
-insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'Eli', 'kovic', '0987415266',
-        'eli.kovic@mc.be', '1-BBB-111', 'BE', '2023-11-07', 'GOLD', 'chien rouge', '18', 1200, 'Woluwe St lambert');
-insert into member(id, firstname, lastname, phone_number,
-                   email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'aaa', 'bbb', '0123456789',
-        'aaa.bbb@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
-
+-- ContactPerson
 insert into contact_person(id,
                            phone_number,
                            mobile_phone_number,
@@ -74,8 +59,7 @@ insert into contact_person(id,
                            postallabel)
 values(nextval('contact_person_seq'), '024568738', '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002', 'Antwerp');
 
-
-
+-- ParkingLot
 insert into parking_lot(id,
                         name,
                         capacity,
@@ -120,6 +104,3 @@ insert into parking_lot(id,
                         fk_division_id)
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
-
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);
