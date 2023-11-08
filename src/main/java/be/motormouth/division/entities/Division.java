@@ -27,6 +27,14 @@ public class Division {
         this.parentDivision = parentDivision;
     }
 
+    public Division(long id, String name, String originalName, String director, Division parentDivision) {
+        this.id = id;
+        this.name = name;
+        this.originalName = originalName;
+        this.director = director;
+        this.parentDivision = parentDivision;
+    }
+
     public long getId() {
         return id;
     }
