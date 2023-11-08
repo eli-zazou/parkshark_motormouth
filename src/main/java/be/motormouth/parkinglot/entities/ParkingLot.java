@@ -40,7 +40,7 @@ public class ParkingLot {
     @Column(name = "NUMBER_OF_PLACES_AVAILABLE")
     private int numberOfPlacesAvailable;
 
-    public ParkingLot() {
+    protected ParkingLot() {
     }
 
     public ParkingLot(String name, Category category, int capacity, ContactPerson contactPerson, Address address, double pricePerHourInEuro, int numberOfPlacesAvailable, Division division) {

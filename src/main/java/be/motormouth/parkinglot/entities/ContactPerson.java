@@ -22,13 +22,17 @@ public class ContactPerson {
     @Embedded
     private Address address;
 
-    public ContactPerson() {
+    protected ContactPerson() {
     }
 
     public ContactPerson(String phoneNumber,
                          String mobilePhoneNumber,
                          String email,
                          Address address) {
+        this.phoneNumber = phoneNumber;
+        this.mobilePhoneNumber = mobilePhoneNumber;
+        this.email = email;
+        this.address = address;
     }
 
     public Long getId() {
@@ -50,4 +54,20 @@ public class ContactPerson {
     public Address getAddress() {
         return address;
     }
+
+//    public void setPhoneNumber(String phoneNumber) {
+//        this.phoneNumber = phoneNumber;
+//    }
+//
+//    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+//        this.mobilePhoneNumber = mobilePhoneNumber;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 }
