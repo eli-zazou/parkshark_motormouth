@@ -13,12 +13,14 @@ import be.motormouth.security.users.User;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.resteasy.reactive.ResponseStatus;
 import org.jboss.resteasy.reactive.RestHeader;
 
 import java.util.Collection;
 
 import static be.motormouth.security.Feature.*;
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 
 @Path("/divisions")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -72,7 +74,11 @@ public class DivisionController {
     //to do : authorization
     @POST
     @Path("/{id}/parkinglot")
-    public ParkingLotDto createParkingLot(CreateParkingLotDto createParkingLotDto, @PathParam("id")String divisionId){
-        return ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId));
+    public Response createParkingLot(CreateParkingLotDto createParkingLotDto, @PathParam("id")String divisionId){
+        try {
+            return Response.ok().entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
+        } catch (Exception e) {
+            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 }
