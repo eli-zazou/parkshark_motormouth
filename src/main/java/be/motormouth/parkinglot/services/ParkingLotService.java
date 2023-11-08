@@ -2,6 +2,7 @@ package be.motormouth.parkinglot.services;
 
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.services.DivisionService;
+import be.motormouth.exceptions.UnknownParkingLotException;
 import be.motormouth.parkinglot.ContactPersonPanacheRepository;
 import be.motormouth.parkinglot.ParkingLotPanacheRepository;
 import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
@@ -20,13 +21,14 @@ public class ParkingLotService {
     DivisionService divisionService;
     @Inject
     ContactPersonPanacheRepository contactPersonRepository;
+    private String errorMessage;
 
 
     @Transactional
     public ParkingLot createParkingLot(CreateParkingLotDto createParkingLotDto, String divisionId) {
         logger.info(createParkingLotDto);
         //check if id is null and if division exist
-        if(divisionId == null)
+        if (divisionId == null)
             throw new IllegalArgumentException("division id must not be null");
 
         Division division = divisionService.viewDivisionsById(divisionId);
@@ -34,5 +36,14 @@ public class ParkingLotService {
         //contactPersonRepository.createContactPerson(ContactPersonMapper.toEntity(createParkingLotDto.createContactPersonDto()));
 
         return parkingLotPanacheRepository.createParkingLot(ParkingLotMapper.toEntity(createParkingLotDto, division));
+    }
+
+    public ParkingLot getParkingLot(Long id) {
+        return parkingLotPanacheRepository.findByIdOptional(id)
+                .orElseThrow(() -> {
+                    errorMessage = "Parking lot " + id.toString() + " not found";
+                    logger.info(errorMessage);
+                    return new UnknownParkingLotException(errorMessage);
+                });
     }
 }

@@ -89,4 +89,8 @@ public class ParkingLot {
     public Division getDivision() {
         return division;
     }
+
+    public void setNumberOfPlacesAvailable(int numberOfPlacesAvailable) {
+        this.numberOfPlacesAvailable = numberOfPlacesAvailable;
+    }
 }
