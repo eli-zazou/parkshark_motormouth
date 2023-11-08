@@ -1,28 +1,30 @@
 package be.motormouth.member.services;
 
-
 import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
-import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 
 @ApplicationScoped
 @Transactional
 public class MemberService {
 
     private final MemberPanacheRepository memberRepository;
+
+    private final Logger logger = Logger.getLogger(MemberService.class);
+    private String errorMessage;
 
     public MemberService(MemberPanacheRepository memberPanacheRepository){
         this.memberRepository = memberPanacheRepository;
@@ -34,39 +36,63 @@ public class MemberService {
 
     public Member getMemberById(Long id) {
         return memberRepository.getMemberById(id)
-                .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member " + id + " not Found").build()));
+                .orElseThrow(()-> new NotFoundException(Response.status(Response.Status.NOT_FOUND).entity("Member with: " + id + " not Found").build()));
     }
 
     public Member createMember(CreateMemberDto createMemberDto) throws IllegalArgumentException {
         if (createMemberDto == null) {
-            throw new IllegalArgumentException("Member to create not provided");
+            errorMessage = "Member to create not provided";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if(createMemberDto.getFirstName()== null || createMemberDto.getFirstName().isEmpty()){
-            throw new IllegalArgumentException("Firstname not provided.");
+            errorMessage= "Firstname not provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if(createMemberDto.getLastName() == null || createMemberDto.getLastName().isEmpty()){
-            throw new IllegalArgumentException("Lastname not provided.");
+            errorMessage="Lastname not provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
-        validateEmail(createMemberDto.getEmailAddress());
         if (createMemberDto.getLicensePlate() == null){
-            throw new IllegalArgumentException("Licence Plate not provided.");
+            errorMessage="Licence Plate not provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if (createMemberDto.getAddress() == null){
-            throw new IllegalArgumentException("Address not provided.");
+            errorMessage = "Address not provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if (createMemberDto.getPhoneNumber() == null){
-            throw new IllegalArgumentException("Phone Number not provided.");
+            errorMessage = "Phone Number not provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if( createMemberDto.getMembershipLevel() == null){
             createMemberDto.setMembershipLevel(MembershipLevel.BRONZE);
         }
+
+        try{
+            validateEmail(createMemberDto.getEmailAddress());
+        }catch (IllegalArgumentException exception){
+            errorMessage = "Email validation error: " + exception.getMessage();
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
         try {
             MembershipLevel.valueOf(String.valueOf(createMemberDto.getMembershipLevel()));
         }catch (IllegalArgumentException exception){
-            throw new IllegalArgumentException("Invalid Membership Level provided.");
+            errorMessage = "Invalid Membership Level provided.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
+
         Member memberToRegister = MemberMapper.toEntity(createMemberDto);
         memberRepository.createMember( memberToRegister);
+        logger.info("Member created successfully");
+
         return memberToRegister;
     }
 
@@ -80,17 +106,23 @@ public class MemberService {
 
     public String validateEmail(String email) throws IllegalArgumentException {
         if (email == null || email.trim().isEmpty()) {
-            throw new IllegalArgumentException("Email address cannot be empty or null.");
+            errorMessage= "Email address cannot be empty or null.";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         List<Member>  allMembers = memberRepository.getAllMembers();
         Optional<Member> result = allMembers.stream()
                 .filter(e -> e.getEmailAddress().equalsIgnoreCase(email))
                 .findFirst();
         if (result.isPresent()) {
-            throw new IllegalArgumentException("Email " + email + " not unique");
+            errorMessage="Email " + email + " not unique";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         if (!isValidEmail(email)) {
-            throw new IllegalArgumentException("Email " + email + " not valid");
+            errorMessage = "Email " + email + " not valid";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
         return email;
     }
