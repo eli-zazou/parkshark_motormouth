@@ -5,6 +5,7 @@ import be.motormouth.allocation.entities.Allocation;
 import be.motormouth.division.dto.DivisionDTO;
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.services.DivisionMapper;
+import be.motormouth.parkinglot.services.ParkingLotMapper;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -16,11 +17,12 @@ public class AllocationMapper {
     public static AllocationDto mapToDto(Allocation allocation) {
         return new AllocationDto(
                 allocation.getId(),
-                allocation.getParkingLot(),
+                ParkingLotMapper.toDto(allocation.getParkingLot()),
                 allocation.getMember(),
                 allocation.getLicensePlate(),
                 allocation.getStartTime(),
                 allocation.getEndTime(),
+                allocation.calculateDuration(),
                 allocation.isActive()
         );
     }
