@@ -15,10 +15,10 @@ public class Allocation {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "allocation_seq")
     @SequenceGenerator(name = "allocation_seq", sequenceName = "allocation_seq", allocationSize = 1)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_PARKING_LOT_ID")
     private ParkingLot parkingLot;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_MEMBER_ID")
     private Member member;
     private String licensePlate;
