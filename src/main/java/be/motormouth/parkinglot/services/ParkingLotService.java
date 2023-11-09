@@ -12,20 +12,21 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @ApplicationScoped
+@Transactional
 public class ParkingLotService {
-    private final org.jboss.logging.Logger logger = Logger.getLogger(ParkingLotService.class);
     @Inject
     ParkingLotPanacheRepository parkingLotPanacheRepository;
     @Inject
     DivisionService divisionService;
     @Inject
     ContactPersonPanacheRepository contactPersonRepository;
+    private final Logger logger = Logger.getLogger(ParkingLotService.class);
     private String errorMessage;
 
-    @Transactional
     public ParkingLot createParkingLot(CreateParkingLotDto createParkingLotDto, String divisionId) {
         if (divisionId == null)
             throw new IllegalArgumentException("division id must not be null");
@@ -34,6 +35,9 @@ public class ParkingLotService {
         return parkingLotPanacheRepository.createParkingLot(ParkingLotMapper.toEntity(createParkingLotDto, division));
     }
 
+    public List<ParkingLot> getAllParkingLots() {
+        return parkingLotPanacheRepository.getAllParkingLots();
+    }
     public ParkingLot getParkingLot(Long id) {
         return parkingLotPanacheRepository.findByIdOptional(id)
                 .orElseThrow(() -> {
