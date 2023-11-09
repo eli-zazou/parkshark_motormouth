@@ -37,6 +37,7 @@ public class AllocationController {
         return AllocationMapper.mapToDto(
                 allocationService.viewAllAllocations());
     }
+
     @POST
     @ResponseStatus(201)
     public AllocationDto startAllocation(@RestHeader String authorization, CreateAllocationDto createAllocationDto) {
@@ -44,6 +45,7 @@ public class AllocationController {
         return AllocationMapper.mapToDto(
                 allocationService.startAllocation(createAllocationDto, connectedUser));
     }
+
     @PATCH
     @Path("/{id}")
     @ResponseStatus(201)
@@ -58,15 +60,14 @@ public class AllocationController {
     @ResponseStatus(200)
     public Collection<AllocationDto> getParkingAllocationForMember(@RestHeader String authorization,
                                                                    @PathParam("id") Long id,
-                                                                   @QueryParam("active") Optional<Boolean> active){
+                                                                   @QueryParam("active") Optional<Boolean> active) {
         User connectedUser = securityService.validateAuthorization(authorization, GET_ALL_PARKING_ALLOCATIONS_OF_MEMBER);
 
         Collection<Allocation> result;
 
-        if ( active.isEmpty() ){
+        if (active.isEmpty()) {
             result = allocationService.getAllocationsForMember(id);
-        }
-        else {
+        } else {
             result = allocationService.getAllocationsForMember(id, active.get());
         }
         return AllocationMapper.mapToDto(result);

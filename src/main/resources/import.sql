@@ -1,6 +1,7 @@
 -- This file allow to write SQL commands that will be emitted in test and dev.
 -- The commands are commented as their support depends of the database
-SET search_path TO parkshark;
+SET
+search_path TO parkshark;
 --Division
 insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Top Level', 'Original Top Level', 'Director', null);
@@ -31,10 +32,12 @@ insert into users(id, password, role, user_id, fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MANAGER', 'admin',
         1);
 insert into users(id, password, role, user_id, fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'goldmember',
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER',
+        'goldmember',
         2);
 insert into users(id, password, role, user_id, fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'silvermember',
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER',
+        'silvermember',
         3);
 
 insert into contact_person(id,
@@ -121,13 +124,16 @@ insert into allocation(id,
                        starttime,
                        endtime,
                        licenseplate,
+                       allocationstatus,
                        fk_member_id,
                        fk_parking_lot_id)
-values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 1, 1);
+values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 'NOT_YET_INVOICED', 1, 1);
 insert into allocation(id,
                        starttime,
                        endtime,
                        licenseplate,
+                       allocationstatus,
                        fk_member_id,
                        fk_parking_lot_id)
-values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111', 2, 1);
+values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111',
+        'NOT_YET_INVOICED', 2, 1);
