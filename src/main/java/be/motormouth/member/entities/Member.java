@@ -3,7 +3,6 @@ package be.motormouth.member.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +12,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
     @SequenceGenerator(name = "member_seq", sequenceName = "member_seq", allocationSize = 1)
-    private Long Id;
+    private Long id;
 
     @Column
     private String firstName;
@@ -35,14 +34,14 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private MembershipLevel membershipLevel;
 
-    protected Member(){
+    protected Member() {
         // for JPA
     }
 
     // todo make a builder.
     public Member(String firstName, String lastName, String phoneNumber,
-                  String emailAddress, Address address , LicensePlate licensePlate,
-                  MembershipLevel membershipLevel, LocalDate registrationDate){
+                  String emailAddress, Address address, LicensePlate licensePlate,
+                  MembershipLevel membershipLevel, LocalDate registrationDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -53,12 +52,12 @@ public class Member {
         this.membershipLevel = membershipLevel;
     }
 
-    public Address getAddress(){
+    public Address getAddress() {
         return this.address;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getFirstName() {
@@ -94,17 +93,16 @@ public class Member {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return Objects.equals(Id, member.Id);
+        return Objects.equals(id, member.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id);
+        return Objects.hash(id);
     }
 }
