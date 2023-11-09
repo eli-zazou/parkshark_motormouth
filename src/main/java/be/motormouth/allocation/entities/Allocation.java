@@ -24,6 +24,8 @@ public class Allocation {
     private String licensePlate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private AllocationStatus allocationStatus;
 
     public Allocation(ParkingLot parkingLot, Member member, String licensePlate) {
@@ -87,5 +89,9 @@ public class Allocation {
 
     public boolean isActive() {
         return endTime == null;
+    }
+
+    public void setAllocationStatus(AllocationStatus allocationStatus) {
+        this.allocationStatus = allocationStatus;
     }
 }

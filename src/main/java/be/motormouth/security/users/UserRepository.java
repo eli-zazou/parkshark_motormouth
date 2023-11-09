@@ -36,7 +36,7 @@ public class UserRepository implements PanacheRepository<User> {
         try {
             user = Optional.ofNullable(find("userId = ?1", userId.toLowerCase()).singleResult());
         } catch (NoResultException noResultException) {
-            logger.info("UserId " + userId + "not found");
+            logger.info("UserId " + userId + " not found");
             user = Optional.empty();
         }
         return user;

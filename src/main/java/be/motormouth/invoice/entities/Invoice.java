@@ -2,6 +2,7 @@ package be.motormouth.invoice.entities;
 
 import be.motormouth.member.entities.Member;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,8 +22,11 @@ public class Invoice {
     private Member member;
     private LocalDate creationDate;
     private LocalDate expirationDate;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS")
     private InvoiceStatus invoiceStatus;
     @OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private List<InvoiceItem> invoiceItems;
 
     public Invoice() {
@@ -71,5 +75,18 @@ public class Invoice {
 
     public void setInvoiceStatus(InvoiceStatus invoiceStatus) {
         this.invoiceStatus = invoiceStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", invoiceDate=" + invoiceDate +
+                ", member=" + member +
+                ", creationDate=" + creationDate +
+                ", expirationDate=" + expirationDate +
+                ", invoiceStatus=" + invoiceStatus +
+                ", invoiceItems=" + invoiceItems +
+                '}';
     }
 }
