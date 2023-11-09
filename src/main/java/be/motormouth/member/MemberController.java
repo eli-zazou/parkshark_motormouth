@@ -2,6 +2,7 @@ package be.motormouth.member;
 
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
+import be.motormouth.member.dto.MemberDtoSpecificFields;
 import be.motormouth.member.entities.MembershipLevel;
 import be.motormouth.member.services.MemberMapper;
 import be.motormouth.member.services.MemberService;
@@ -48,5 +49,12 @@ public class MemberController {
     }
 
     // todo can we update our membership level??
+
+    @GET
+    @Path("/specificFields")
+    public List<MemberDtoSpecificFields> getAllMembersSpecificFields(@RestHeader String authorization){
+        securityService.validateAuthorization(authorization, VIEW_ALL_MEMBERS);
+        return memberService.getAllMembersSpecificFields();
+    }
 
 }
