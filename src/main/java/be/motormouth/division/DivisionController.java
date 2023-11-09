@@ -76,10 +76,6 @@ public class DivisionController {
     public Response createParkingLot(@RestHeader String authorization, @PathParam("id") String divisionId
             , CreateParkingLotDto createParkingLotDto){
         User connectedUser = securityService.validateAuthorization(authorization, CREATE_PARKING_LOT);
-        try {
-            return Response.status(CREATED).entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
-        } catch (Exception e) {
-            return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
-        }
+        return Response.status(CREATED).entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
     }
 }

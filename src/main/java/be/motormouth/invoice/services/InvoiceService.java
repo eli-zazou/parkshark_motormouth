@@ -4,6 +4,7 @@ import be.motormouth.allocation.entities.Allocation;
 import be.motormouth.allocation.entities.AllocationStatus;
 import be.motormouth.allocation.services.AllocationService;
 import be.motormouth.division.services.DivisionService;
+import be.motormouth.exceptions.AlreadyClosedInvoiceException;
 import be.motormouth.invoice.InvoicePanacheRepository;
 import be.motormouth.invoice.entities.Invoice;
 import be.motormouth.invoice.entities.InvoiceItem;
@@ -12,11 +13,13 @@ import be.motormouth.member.entities.Member;
 import be.motormouth.security.users.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import org.jboss.logging.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.util.Collection;
 import java.util.List;
 
 @ApplicationScoped
@@ -76,5 +79,19 @@ public class InvoiceService {
                 .filter(allocation -> !allocation.isActive())
                 .filter(allocation -> allocation.getEndTime().isBefore(invoiceDate))
                 .toList();
+    }
+
+    public Collection<Invoice> getAll() {
+        return invoicePanacheRepository.getAllInvoices();
+    }
+
+    @Transactional
+    public void markAsClosed(String invoiceId) {
+        Invoice invoice = invoicePanacheRepository.findInvoiceById(Long.parseLong(invoiceId)).orElseThrow(NotFoundException::new);
+        if (invoice.getInvoiceStatus() != InvoiceStatus.OPEN)
+            throw new AlreadyClosedInvoiceException(
+                    "Invoice with id \"" + invoice.getId() + "\" belonging to " + invoice.getMember().getFirstName() + " " + invoice.getMember().getLastName()
+            + " is already closed.");
+        invoice.setInvoiceStatus(InvoiceStatus.CLOSED);
     }
 }

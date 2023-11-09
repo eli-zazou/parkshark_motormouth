@@ -32,12 +32,10 @@ insert into users(id, password, role, user_id, fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MANAGER', 'admin',
         1);
 insert into users(id, password, role, user_id, fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER',
-        'goldmember',
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'goldmember',
         2);
 insert into users(id, password, role, user_id, fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER',
-        'silvermember',
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MEMBER', 'silvermember',
         3);
 
 insert into contact_person(id,
@@ -137,3 +135,29 @@ insert into allocation(id,
                        fk_parking_lot_id)
 values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111',
         'NOT_YET_INVOICED', 2, 1);
+
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-03', '2023-02-04', 0, '2023-02-03', 1);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-05', '2023-02-06', 1, '2023-02-05', 2);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 0, '2023-02-07', 3);
+
