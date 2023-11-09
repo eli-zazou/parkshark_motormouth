@@ -9,7 +9,12 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ParkingLotPanacheRepository implements PanacheRepository<ParkingLot> {
     public ParkingLot createParkingLot(ParkingLot parkingLot) {
+
         persist(parkingLot);
         return parkingLot;
+    }
+
+    public ParkingLot getParkingLotByName(String name) {
+        return find("name", name).firstResult();
     }
 }

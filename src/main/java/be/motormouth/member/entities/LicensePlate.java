@@ -14,13 +14,13 @@ public class LicensePlate {
     protected LicensePlate() {
 
     }
-
-    public LicensePlate(String licensePlateNumber, String issuingCountry){
+    
+    public LicensePlate(String licensePlateNumber, String issuingCountry) {
         this.licensePlateNumber = licensePlateNumber;
         this.issuingCountry = issuingCountry;
     }
 
-    public java.lang.String getLicensePlateNumber() {
+    public String getLicensePlateNumber() {
         return licensePlateNumber;
     }
 }

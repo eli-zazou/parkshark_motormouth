@@ -18,11 +18,14 @@ public class DivisionPanacheRepository implements PanacheRepository<Division> {
         return listAll();
     }
     public Collection<Division> getMainDivisions() {
-        //TODO verify
-        return find("parentDivision = null", emptyMap()).stream().toList();
+        return find("parentDivision = null")
+                .stream()
+                .toList();
     }
     public Collection<Division> getSubDivisions(Division division) {
-        return find("parentDivision = ?1", division.getId()).stream().toList();
+        return find("parentDivision = ?1", division)
+                .stream()
+                .toList();
     }
     public Optional<Division> findDivisionById(Long id) {
         return findByIdOptional(id);

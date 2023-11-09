@@ -13,16 +13,15 @@ public class Allocation {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "allocation_seq")
     @SequenceGenerator(name = "allocation_seq", sequenceName = "allocation_seq", allocationSize = 1)
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "FK_PARKING_LOT_ID")
     private ParkingLot parkingLot;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "FK_MEMBER_ID")
     private Member member;
     private String licensePlate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    // TODO do we need status?
 
     public Allocation(ParkingLot parkingLot, Member member, String licensePlate) {
         this.parkingLot = parkingLot;

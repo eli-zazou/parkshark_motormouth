@@ -15,8 +15,13 @@ public class ExeptionHandler {
         return RestResponse.status(Response.Status.NOT_FOUND, ex.getMessage());
     }
 
-    @ServerExceptionMapper(value = {UnmatchedLicensePlateException.class, OutOfCapacityParkingLotException.class, UnmatchedMemberException.class})
+    @ServerExceptionMapper(value = {UnmatchedLicensePlateException.class, OutOfCapacityParkingLotException.class, UnmatchedMemberException.class, InactiveAllocationException.class})
     public RestResponse<String> forbiddenException(RuntimeException ex) {
         return RestResponse.status(Response.Status.FORBIDDEN, ex.getMessage());
+    }
+
+    @ServerExceptionMapper(value = {IllegalArgumentException.class})
+    public RestResponse<String> badRequestException(RuntimeException ex) {
+        return RestResponse.status(Response.Status.BAD_REQUEST, ex.getMessage());
     }
 }

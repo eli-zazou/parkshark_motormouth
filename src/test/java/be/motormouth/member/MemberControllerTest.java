@@ -54,6 +54,9 @@ class MemberControllerTest {
         given()
                 .pathParam("id", 1)
                 .when()
+                .auth()
+                .preemptive()
+                .basic("admin", "1234")
                 .get("/members/{id}")
                 .then()
                 .statusCode(401);

@@ -39,4 +39,15 @@ public class ListDivision {
     public List<ListDivision> getSubDivisions() {
         return subDivisions;
     }
+
+    @Override
+    public String toString() {
+        return "ListDivision{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", director='" + director + '\'' +
+                ", subDivisions=" + subDivisions +
+                '}';
+    }
 }

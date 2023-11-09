@@ -3,10 +3,7 @@ package be.motormouth.allocation.services;
 import be.motormouth.allocation.AllocationPanacheRepository;
 import be.motormouth.allocation.dto.CreateAllocationDto;
 import be.motormouth.allocation.entities.Allocation;
-import be.motormouth.exceptions.OutOfCapacityParkingLotException;
-import be.motormouth.exceptions.UnknownAllocationException;
-import be.motormouth.exceptions.UnmatchedLicensePlateException;
-import be.motormouth.exceptions.UnmatchedMemberException;
+import be.motormouth.exceptions.*;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
 import be.motormouth.parkinglot.entities.ParkingLot;
@@ -18,7 +15,6 @@ import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -34,6 +30,8 @@ public class AllocationService {
     }
 
     public Allocation startAllocation(CreateAllocationDto createAllocationDto, User connectedUser) {
+        validateFilledIn(createAllocationDto);
+
         ParkingLot parkingLot = parkingLotService.getParkingLot(createAllocationDto.parkingLotId());
         Member member = connectedUser.getMember();
 
@@ -45,31 +43,47 @@ public class AllocationService {
                 member,
                 createAllocationDto.licensePlate()
         );
-        allocationPanacheRepository.persist(allocation);
+
+        return allocationPanacheRepository.createAllocation(allocation);
+    }
+
+    public Allocation stopAllocation(User connectedUser, String id) {
+        Allocation allocation = allocationPanacheRepository.getAllocationById(Long.parseLong(id))
+                .orElseThrow(() -> {
+                    errorMessage = "Allocation " + id + " not known";
+                    logger.info(errorMessage);
+                    return new UnknownAllocationException(errorMessage);
+                });
+
+        validateMember(allocation, connectedUser.getMember());
+        validateActiveAllocation(allocation);
+
+        allocation.setEndTime(LocalDateTime.now());
+        incrementNumberOfPlacesAvailable(allocation.getParkingLot());
+
         return allocation;
     }
-    public Allocation stopAllocation(User connectedUser, String id) {
-        Member member = connectedUser.getMember();
 
-        Optional<Allocation> foundAllocation = allocationPanacheRepository.findByIdOptional(Long.parseLong(id));
-        if (foundAllocation.isEmpty()) {
-            errorMessage = "Allocation " + id + " not known";
-            logger.errorf(errorMessage);
-            throw new UnknownAllocationException(errorMessage);
+    public Collection<Allocation> viewAllAllocations() {
+        return allocationPanacheRepository.getAllAllocations();
+    }
+
+    private void validateFilledIn(CreateAllocationDto createAllocationDto) {
+        if (createAllocationDto == null) {
+            errorMessage = "Please provide an allocation";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
-        Allocation allocation = foundAllocation.get();
-        if (!(allocation.getMember().equals(member))) {
-            errorMessage = "Allocation " + id + " does not belong to " + member.getLastName();
-            logger.errorf(errorMessage);
-            throw new UnmatchedMemberException(errorMessage);
+        if (createAllocationDto.parkingLotId() == null) {
+            errorMessage = "Please provide a parking lot id";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
-        if (!allocation.isActive()) {
-            errorMessage = "Allocation " + id + " is not active";
-            logger.errorf(errorMessage);
-            throw new UnknownAllocationException(errorMessage); //todo - other exception
+        if (createAllocationDto.licensePlate() == null) {
+            errorMessage = "Please provide a license plate number";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
-        allocation.setEndTime(LocalDateTime.now());
-        return allocation;
     }
 
     private void validateLicensePlate(String licensePlate, Member member) {
@@ -84,14 +98,30 @@ public class AllocationService {
 
     private void decrementNumberOfPlacesAvailable(ParkingLot parkingLot) {
         if (parkingLot.getNumberOfPlacesAvailable() <= 0) {
-            errorMessage = "This parking lot is out of capacity";
+            errorMessage = "This parking lot has no more places available";
             logger.info(errorMessage);
             throw new OutOfCapacityParkingLotException(errorMessage);
         }
         parkingLot.setNumberOfPlacesAvailable(parkingLot.getNumberOfPlacesAvailable() - 1);
     }
 
-    public Collection<Allocation> viewAllAllocations() {
-        return allocationPanacheRepository.listAll();
+    private void validateMember(Allocation allocation, Member member) {
+        if (!(allocation.getMember().equals(member))) {
+            errorMessage = "Allocation " + allocation.getId() + " does not belong to " + member.getLastName();
+            logger.info(errorMessage);
+            throw new UnmatchedMemberException(errorMessage);
+        }
+    }
+
+    private void validateActiveAllocation(Allocation allocation) {
+        if (!allocation.isActive()) {
+            errorMessage = "Allocation " + allocation.getId() + " is not active";
+            logger.info(errorMessage);
+            throw new InactiveAllocationException(errorMessage);
+        }
+    }
+
+    private void incrementNumberOfPlacesAvailable(ParkingLot parkingLot) {
+        parkingLot.setNumberOfPlacesAvailable(parkingLot.getNumberOfPlacesAvailable() + 1);
     }
 }

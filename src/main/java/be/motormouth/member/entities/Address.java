@@ -20,10 +20,10 @@ public class Address {
     protected Address() {
     }
 
-    public Address(String streetName, String streetNumber, String postalLabel, int postalCode) {
-        this.postalCode = postalCode;
+    public Address(String streetName, String streetNumber, int postalCode, String postalLabel) {
         this.streetName = streetName;
         this.streetNumber = streetNumber;
+        this.postalCode = postalCode;
         this.postalLabel = postalLabel;
     }
 
