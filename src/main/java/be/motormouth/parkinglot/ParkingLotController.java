@@ -1,6 +1,5 @@
 package be.motormouth.parkinglot;
 
-import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
 import be.motormouth.parkinglot.dtos.ParkingLotDto;
 import be.motormouth.parkinglot.services.ParkingLotMapper;
 import be.motormouth.parkinglot.services.ParkingLotService;
@@ -11,7 +10,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.RestHeader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static be.motormouth.security.Feature.*;
