@@ -131,7 +131,7 @@ public class AllocationService {
 
     public Collection<Allocation> getAllocationsForMember(Long id) {
         memberService.getMemberById(id);
-        return allocationPanacheRepository.getAllocationForMemberId(id);
+        return allocationPanacheRepository.getAllAllocationsForMemberId(id);
     }
 
     public Collection<Allocation> getAllocationsForMember(Long id, boolean active) {

@@ -22,7 +22,7 @@ public class AllocationPanacheRepository implements PanacheRepository<Allocation
         return listAll();
     }
 
-    public Collection<Allocation> getAllocationForMemberId(Long id) {
+    public Collection<Allocation> getAllAllocationsForMemberId(Long id) {
         return find("member.id", id).list();
     }
 

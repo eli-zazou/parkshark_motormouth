@@ -56,9 +56,13 @@ public class AllocationController {
     @GET
     @Path("/members/{id}")
     @ResponseStatus(200)
-    public Collection<AllocationDto> getParkingAllocationForMember(@RestHeader String authorization, @PathParam("id") Long id, @QueryParam("active") Optional<Boolean> active){
+    public Collection<AllocationDto> getParkingAllocationForMember(@RestHeader String authorization,
+                                                                   @PathParam("id") Long id,
+                                                                   @QueryParam("active") Optional<Boolean> active){
         User connectedUser = securityService.validateAuthorization(authorization, GET_ALL_PARKING_ALLOCATIONS_OF_MEMBER);
+
         Collection<Allocation> result;
+
         if ( active.isEmpty() ){
             result = allocationService.getAllocationsForMember(id);
         }
