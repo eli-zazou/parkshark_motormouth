@@ -13,7 +13,10 @@ import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.core.MediaType;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.LocalDate;
 
@@ -22,9 +25,11 @@ import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
 @QuarkusTestResource(H2DatabaseTestResource.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MemberControllerTest {
 
     @Test
+    @Order(1)
     void getAllMembers_withoutAuthorization(){
         given()
                 .when()
@@ -34,6 +39,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @Order(1)
     void getAllMembers(){
         given()
                 .when()
@@ -50,19 +56,18 @@ class MemberControllerTest {
     }
 
     @Test
+    @Order(1)
     void getMemberById_withoutAuthorization(){
         given()
                 .pathParam("id", 1)
                 .when()
-                .auth()
-                .preemptive()
-                .basic("admin", "1234")
                 .get("/members/{id}")
                 .then()
                 .statusCode(401);
     }
 
     @Test
+    @Order(1)
     void getMemberById_AsAMember(){
         given()
                 .pathParam("id", 1)
@@ -76,6 +81,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @Order(1)
     void getMemberById_AsManager(){
         given()
                 .pathParam("id", 1)
@@ -95,6 +101,7 @@ class MemberControllerTest {
     }
 
     @Test
+    @Order(2)
     void createMember(){
         JsonObject address = Json.createObjectBuilder()
                 .add("streetName", "OUIouiLaan")
