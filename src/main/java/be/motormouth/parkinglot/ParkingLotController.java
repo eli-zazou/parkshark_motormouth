@@ -1,5 +1,6 @@
 package be.motormouth.parkinglot;
 
+import be.motormouth.parkinglot.dtos.ListParkingLotDto;
 import be.motormouth.parkinglot.dtos.ParkingLotDto;
 import be.motormouth.parkinglot.services.ParkingLotMapper;
 import be.motormouth.parkinglot.services.ParkingLotService;
@@ -24,9 +25,9 @@ public class ParkingLotController {
     ParkingLotService parkingLotService;
 
     @GET
-    public List<ParkingLotDto> getAllParkingLots(@RestHeader String authorization) {
+    public List<ListParkingLotDto> getAllParkingLots(@RestHeader String authorization) {
         User connectedUser = securityService.validateAuthorization(authorization, VIEW_ALL_PARKING_LOTS);
-        return ParkingLotMapper.toDto(parkingLotService.getAllParkingLots());
+        return ParkingLotMapper.toListDto(parkingLotService.getAllParkingLots());
     }
 
     @GET
