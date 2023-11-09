@@ -34,6 +34,7 @@ public class AllocationController {
         return AllocationMapper.mapToDto(
                 allocationService.viewAllAllocations());
     }
+
     @POST
     @ResponseStatus(201)
     public AllocationDto startAllocation(@RestHeader String authorization, CreateAllocationDto createAllocationDto) {
@@ -41,6 +42,7 @@ public class AllocationController {
         return AllocationMapper.mapToDto(
                 allocationService.startAllocation(createAllocationDto, connectedUser));
     }
+
     @PATCH
     @Path("/{id}")
     @ResponseStatus(201)
@@ -48,5 +50,17 @@ public class AllocationController {
         User connectedUser = securityService.validateAuthorization(authorization, END_ALLOCATION_PARKING_SPOT);
         return AllocationMapper.mapToDto(
                 allocationService.stopAllocation(connectedUser, id));
+    }
+
+    @GET
+    @ResponseStatus(200)
+    @Path("/{id}")
+    public Collection<AllocationDto> viewAllocationsByParkingLot(
+            @RestHeader String authorization,
+            @PathParam("id") Long parkingLotId,
+            @QueryParam("filter") String filter){
+        User connectedUser = securityService.validateAuthorization(authorization, GET_ALL_PARKING_ALLOCATIONS);
+        return AllocationMapper.mapToDto(
+                allocationService.viewAllocationsByParkingLot(parkingLotId, filter));
     }
 }
