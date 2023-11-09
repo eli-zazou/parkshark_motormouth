@@ -66,7 +66,6 @@ public class ParkingLotService {
 
         if(!EmailValidator.isEmailValid(createParkingLotDto.createContactPersonDto().email()))
             throw new InvalidEmailException(createParkingLotDto.createContactPersonDto().email());
-        //validateEmail(createParkingLotDto);
 
         if ((createParkingLotDto.createContactPersonDto().phoneNumber() == null || createParkingLotDto.createContactPersonDto().phoneNumber().isEmpty()) &&
                 (createParkingLotDto.createContactPersonDto().mobilePhoneNumber() == null || createParkingLotDto.createContactPersonDto().mobilePhoneNumber().isEmpty()))

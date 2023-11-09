@@ -117,3 +117,28 @@ insert into parking_lot(id,
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
 
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-03', '2023-02-04', 0, '2023-02-03', 1);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-05', '2023-02-06', 1, '2023-02-05', 2);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 0, '2023-02-07', 3);
+

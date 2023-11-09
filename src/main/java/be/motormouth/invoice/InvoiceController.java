@@ -10,11 +10,9 @@ import be.motormouth.security.SecurityService;
 import be.motormouth.security.users.User;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.ResponseStatus;
 import org.jboss.resteasy.reactive.RestHeader;
@@ -35,6 +33,21 @@ public class InvoiceController {
     public InvoiceDTO createMonthlyInvoice(@RestHeader String authorization) {
         User connectedUser = securityService.validateAuthorization(authorization, Feature.GET_MONTHLY_INVOICE);
         return InvoiceMapper.toDTO(invoiceService.getMonthlyInvoice(connectedUser));
+    }
+
+    @GET
+    public Response getAllInvoices(@RestHeader String authorization){
+        User connectedUser = securityService.validateAuthorization(authorization, Feature.GET_ALL_INVOICES);
+        return Response.ok().entity(InvoiceMapper.toDTO(invoiceService.getAll())).build();
+    }
+
+    @PATCH
+    @Path("/{id}")
+    public Response markInvoiceAsClosed(@PathParam("id") String invoiceId){
+        //set the existing invoice to close
+        //throw exception if already closed
+        invoiceService.markAsClosed(invoiceId);
+        return Response.ok().build();
     }
 
 }
