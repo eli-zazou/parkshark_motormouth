@@ -21,6 +21,7 @@ import java.util.List;
 
 import static be.motormouth.security.Feature.*;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
+import static jakarta.ws.rs.core.Response.Status.CREATED;
 
 @Path("/divisions")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -70,16 +71,13 @@ public class DivisionController {
         return DivisionMapper.toDTO(divisionService.createDivision(id, divisionDTO));
     }
 
-
-    //to do : authorization
     @POST
     @Path("/{id}/parkinglot")
     public Response createParkingLot(@RestHeader String authorization, @PathParam("id") String divisionId
             , CreateParkingLotDto createParkingLotDto){
         User connectedUser = securityService.validateAuthorization(authorization, CREATE_PARKING_LOT);
         try {
-            //User connectedUser = securityService.validateAuthorization(authorization, CREATE_PARKING_LOT);
-            return Response.ok().entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
+            return Response.status(CREATED).entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
         } catch (Exception e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();
         }
