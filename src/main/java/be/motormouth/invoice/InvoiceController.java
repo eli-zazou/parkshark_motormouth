@@ -43,9 +43,8 @@ public class InvoiceController {
 
     @PATCH
     @Path("/{id}")
-    public Response markInvoiceAsClosed(@PathParam("id") String invoiceId){
-        //set the existing invoice to close
-        //throw exception if already closed
+    public Response markInvoiceAsClosed(@RestHeader String authorization, @PathParam("id") String invoiceId){
+        User connectedUser = securityService.validateAuthorization(authorization, Feature.MARK_INVOICES_CLOSED);
         invoiceService.markAsClosed(invoiceId);
         return Response.ok().build();
     }
