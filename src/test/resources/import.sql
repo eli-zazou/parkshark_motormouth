@@ -109,3 +109,18 @@ insert into parking_lot(id,
                         fk_division_id)
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
+--Allocation
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 1, 1);
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111', 2, 1);
