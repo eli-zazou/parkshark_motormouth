@@ -2,6 +2,7 @@ package be.motormouth.member;
 
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
+import be.motormouth.member.dto.MemberDtoSpecificFields;
 import be.motormouth.member.entities.Member;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,4 +30,5 @@ public class MemberPanacheRepository implements PanacheRepository<Member> {
     public Optional<Member> getMemberByEmail(String email){
         return find("emailAddress", email).singleResultOptional();
     }
+
 }

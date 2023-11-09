@@ -2,6 +2,7 @@ package be.motormouth.member.services;
 
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
+import be.motormouth.member.dto.MemberDtoSpecificFields;
 import be.motormouth.member.entities.Member;
 
 import java.time.LocalDate;
@@ -37,6 +38,5 @@ public class MemberMapper {
         return members.stream().map((MemberMapper::toDto))
                 .collect(Collectors.toList());
     }
-
 
 }
