@@ -73,4 +73,16 @@ public class AllocationController {
         return AllocationMapper.mapToDto(result);
     }
 
+
+    @GET
+    @ResponseStatus(200)
+    @Path("/parkingLot/{id}")
+    public Collection<AllocationDto> viewAllocationsByParkingLot(
+            @RestHeader String authorization,
+            @PathParam("id") Long parkingLotId,
+            @QueryParam("filter") String filter){
+        User connectedUser = securityService.validateAuthorization(authorization, GET_ALL_PARKING_ALLOCATIONS);
+        return AllocationMapper.mapToDto(
+                allocationService.viewAllocationsByParkingLot(parkingLotId, filter));
+    }
 }

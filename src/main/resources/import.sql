@@ -15,18 +15,18 @@ values (nextval('division_seq'), 'Sub Level 2', 'Original Sub Level 2', 'Directo
 insert into member(id, firstname, lastname, phone_number,
                    email_address, license_plate_number, issuing_country, registration_date, membership_level,
                    streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'Zineb', 'El tuti', '0123456789',
-        'zineb.eltuti@mc.be', '1-ABC-111', 'BE', '2023-11-07', 'BRONZE', 'chien vert', '17', 1150, 'Woluwe St Pierre');
+values (nextval('member_seq'), 'Member1', 'Elya', '0123456789',
+        'member1@mc.be', '1-ABC-111', 'BE', '2023-11-07', 'BRONZE', 'chien vert', '17', 1150, 'Woluwe St Pierre');
 insert into member(id, firstname, lastname, phone_number,
                    email_address, license_plate_number, issuing_country, registration_date, membership_level,
                    streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'Eli', 'kovic', '0987415266',
-        'eli.kovic@mc.be', '1-BBB-111', 'BE', '2023-11-07', 'GOLD', 'chien rouge', '18', 1200, 'Woluwe St lambert');
+values (nextval('member_seq'), 'Member2', 'kovic', '0987415266',
+        'member2@mc.be', '1-BBB-111', 'BE', '2023-11-07', 'GOLD', 'chien rouge', '18', 1200, 'Woluwe St lambert');
 insert into member(id, firstname, lastname, phone_number,
                    email_address, license_plate_number, issuing_country, registration_date, membership_level,
                    streetName, streetNumber, postalCode, postalLabel)
-values (nextval('member_seq'), 'aaa', 'bbb', '0123456789',
-        'aaa.bbb@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
+values (nextval('member_seq'), 'Member3', 'bbb', '0123456789',
+        'member3@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
 --User
 insert into users(id, password, role, user_id, fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'MANAGER', 'admin',
@@ -160,4 +160,27 @@ insert into invoice(id,
                     invoicedate,
                     fk_member_id)
 values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 0, '2023-02-07', 3);
+
+-- allocation
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 1, 1);
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111', 2, 1);
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-CCC-111', 1, 3);
 

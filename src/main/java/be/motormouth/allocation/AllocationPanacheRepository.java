@@ -1,6 +1,7 @@
 package be.motormouth.allocation;
 
 import be.motormouth.allocation.entities.Allocation;
+import be.motormouth.parkinglot.entities.ParkingLot;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -20,6 +21,18 @@ public class AllocationPanacheRepository implements PanacheRepository<Allocation
 
     public Collection<Allocation> getAllAllocations() {
         return listAll();
+    }
+
+    public Collection<Allocation> getAllocationsByParkingLot(Long parkingLotId) {
+        return find("parkingLot.id", parkingLotId).list();
+    }
+
+    public Collection<Allocation> getActiveAllocationsByParkingLot(Long parkingLotId) {
+        return find("parkingLot.id = ?1 AND endTime IS NULL", parkingLotId).list();
+    }
+
+    public Collection<Allocation> getStoppedAllocationsByParkingLot(Long parkingLotId) {
+        return find("parkingLot.id = ?1 AND endTime IS NOT NULL", parkingLotId).list();
     }
 
     public Collection<Allocation> getAllAllocationsForMemberId(Long id) {
