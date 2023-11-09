@@ -4,7 +4,9 @@ import be.motormouth.member.entities.Member;
 import be.motormouth.parkinglot.entities.ParkingLot;
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "ALLOCATION")
@@ -60,6 +62,21 @@ public class Allocation {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+    public String calculateDuration() {
+        Duration duration;
+        if (endTime == null ) {
+            duration = Duration.between(startTime, LocalDateTime.now());
+        }
+        else {
+            duration = Duration.between(startTime, endTime);
+        }
+        long millis = duration.toMillis();
+
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 
     public boolean isActive() {

@@ -1,6 +1,6 @@
 -- This file allow to write SQL commands that will be emitted in test and dev.
 -- The commands are commented as their support depends of the database
-SET search_path TO parkshark;
+-- SET search_path TO parkshark;
 --Division
 insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Top Level', 'Original Top Level', 'Director', null);

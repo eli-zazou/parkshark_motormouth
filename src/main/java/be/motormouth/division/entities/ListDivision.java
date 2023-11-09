@@ -9,9 +9,6 @@ public class ListDivision {
     private String director;
     private List<ListDivision> subDivisions;
 
-    public ListDivision() {
-    }
-
     public ListDivision(long id, String name, String originalName, String director, List<ListDivision> subDivisions) {
         this.id = id;
         this.name = name;

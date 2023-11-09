@@ -12,15 +12,17 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @ApplicationScoped
+@Transactional
 public class ParkingLotService {
-    private final org.jboss.logging.Logger logger = Logger.getLogger(ParkingLotService.class);
     private final ParkingLotPanacheRepository parkingLotPanacheRepository;
     private final DivisionService divisionService;
     @Inject
     ContactPersonPanacheRepository contactPersonRepository;
+    private final Logger logger = Logger.getLogger(ParkingLotService.class);
     private String errorMessage;
 
     public ParkingLotService(ParkingLotPanacheRepository parkingLotPanacheRepository, DivisionService divisionService) {
@@ -37,6 +39,9 @@ public class ParkingLotService {
         return parkingLotPanacheRepository.createParkingLot(ParkingLotMapper.toEntity(createParkingLotDto, division));
     }
 
+    public List<ParkingLot> getAllParkingLots() {
+        return parkingLotPanacheRepository.getAllParkingLots();
+    }
     public ParkingLot getParkingLot(Long id) {
         return parkingLotPanacheRepository.findByIdOptional(id)
                 .orElseThrow(() -> {
@@ -77,13 +82,12 @@ public class ParkingLotService {
                             Dot isn’t allowed at the start and end of the local part.\n
                             Consecutive dots aren’t allowed.\n
                             For the local part, a maximum of 64 characters are allowed.\n
-                                                        
+                            
                             For the domain part : \n
                             Numeric values allowed from 0 to 9.\n
                             We allow both uppercase and lowercase letters from a to z.\n
-                            Hyphen “-” aren’t allowed at the start and end of the domain part.\n
-                            Dot “.” aren’t allowed at the end of the domain part.\n
-                            No consecutive dots.\n                   
+                            Hyphen “-” and dot “.” aren’t allowed at the start and end of the domain part.\n
+                            No consecutive dots.\n                        
                             """);
     }
 }

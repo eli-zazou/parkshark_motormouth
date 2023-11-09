@@ -5,9 +5,12 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @ApplicationScoped
 @Transactional
 public class ParkingLotPanacheRepository implements PanacheRepository<ParkingLot> {
+    public List<ParkingLot> getAllParkingLots() { return listAll(); }
     public ParkingLot createParkingLot(ParkingLot parkingLot) {
 
         persist(parkingLot);
