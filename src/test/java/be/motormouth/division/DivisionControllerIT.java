@@ -48,7 +48,7 @@ public class DivisionControllerIT {
 
     @Test
     void createParkingLot(){
-        CreateParkingLotDto createParkingLotXXDto = new CreateParkingLotDto("parking lot XX", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotXXDto = new CreateParkingLotDto("parking lot XX", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
         given()
                 .pathParam("id", 1)

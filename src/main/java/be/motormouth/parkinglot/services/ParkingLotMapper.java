@@ -40,6 +40,6 @@ public class ParkingLotMapper {
                 division,
                 createParkingLotDto.address(),
                 createParkingLotDto.pricePerHourInEuro(),
-                createParkingLotDto.numberOfPlacesAvailable());
+                createParkingLotDto.capacity());
     }
 }

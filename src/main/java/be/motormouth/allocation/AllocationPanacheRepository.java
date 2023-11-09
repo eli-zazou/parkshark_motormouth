@@ -21,4 +21,16 @@ public class AllocationPanacheRepository implements PanacheRepository<Allocation
     public Collection<Allocation> getAllAllocations() {
         return listAll();
     }
+
+    public Collection<Allocation> getAllAllocationsForMemberId(Long id) {
+        return find("member.id", id).list();
+    }
+
+    public Collection<Allocation> getActiveAllocationsForMemberId(Long id) {
+        return find("member.id = ?1 and endTime is null", id).list();
+    }
+
+    public Collection<Allocation> getStoppedAllocationsForMemberId(Long id) {
+        return find("member.id = ?1 and endTime is not null", id).list();
+    }
 }
