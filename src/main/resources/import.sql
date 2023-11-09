@@ -67,7 +67,7 @@ insert into contact_person(id,
                            streetnumber,
                            postalcode,
                            postallabel)
-values (nextval('contact_person_seq'), '024568738', '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002',
+values (nextval('contact_person_seq'), null, '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002',
         'Antwerp');
 
 

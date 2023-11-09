@@ -1,6 +1,7 @@
 package be.motormouth.division.services;
 
 import be.motormouth.division.dto.DivisionDTO;
+import be.motormouth.division.dto.DivisionWithoutParentDTO;
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.entities.ListDivision;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -23,5 +24,8 @@ public class DivisionMapper {
     }
     public static ListDivision toListDivision(Division division, List<ListDivision> subdivisions){
         return new ListDivision(division.getId(), division.getName(), division.getOriginalName(), division.getDirector(), subdivisions);
+    }
+    public static DivisionWithoutParentDTO toListDTO(Division division){
+        return new DivisionWithoutParentDTO(division.getId(), division.getName(), division.getOriginalName(), division.getDirector());
     }
 }
