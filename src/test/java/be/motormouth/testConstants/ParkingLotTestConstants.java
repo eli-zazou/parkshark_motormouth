@@ -9,7 +9,7 @@ import be.motormouth.parkinglot.entities.ContactPerson;
 import be.motormouth.parkinglot.entities.ParkingLot;
 
 public class ParkingLotTestConstants {
-    public static final CreateParkingLotDto CREATE_PARKING_LOT_DTO = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+    public static final CreateParkingLotDto CREATE_PARKING_LOT_DTO = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
     public static final Division DIVISION = new Division(1, "division a", "original name", "director name", null);
 

@@ -29,10 +29,6 @@ class ParkingLotServiceTest {
     private DivisionPanacheRepository divisionPanacheRepository;
     private ParkingLotPanacheRepository parkingLotPanacheRepository;
     private ParkingLotService parkingLotService;
-//    private ParkingLot parkingLot;
-//    private ParkingLotDto parkingLotDto;
-//    private Division division;
-//    private CreateParkingLotDto createParkingLotDto;
 
     @BeforeEach
     void setUp() {
@@ -40,12 +36,6 @@ class ParkingLotServiceTest {
         divisionService = new DivisionService(divisionPanacheRepository);
         parkingLotPanacheRepository = Mockito.mock(ParkingLotPanacheRepository.class);
         parkingLotService = new ParkingLotService(parkingLotPanacheRepository, divisionService);
-
-//        createParkingLotDto = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
-//
-//        division = new Division(1, "division a", "original name", "director name", null);
-//
-//        parkingLot = new ParkingLot(1, "parking lot a", Category.UNDERGROUND_BUILDING, 500, new ContactPerson("023456589", "0465789312", "lll@mmm.ddd", new Address("contact street test", "65", 1180, "Uccle")), division, new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
     }
 
     @Test
@@ -73,7 +63,7 @@ class ParkingLotServiceTest {
 
     @Test
     void createParkingLot_givenNullContactPerson_throwsIllegalArgumentExceptionWithRightMessage() {
-        CreateParkingLotDto createParkingLotDtoWithNullContactPerson = new CreateParkingLotDto("parking lot b", Category.UNDERGROUND_BUILDING, 500, null, new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithNullContactPerson = new CreateParkingLotDto("parking lot b", Category.UNDERGROUND_BUILDING, 500, null, new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
         String divisionId = "1";
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
@@ -85,9 +75,9 @@ class ParkingLotServiceTest {
     void createParkingLot_givenNullOrEmptyContactEmail_throwsIllegalArgumentExceptionWithRightMessage() {
         String emptyEmail = "";
 
-        CreateParkingLotDto createParkingLotDtoWithNullEmail = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", null, new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithNullEmail = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", null, new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
-        CreateParkingLotDto createParkingLotDtoWithEmptyEmail = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", emptyEmail, new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithEmptyEmail = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", emptyEmail, new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
         String divisionId = "1";
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
@@ -103,9 +93,9 @@ class ParkingLotServiceTest {
     @Test
     void createParkingLot_givenNullOrEmptyPhoneNumberAndMobileNumber_throwsIllegalArgumentExceptionWithRightMessage() {
 
-        CreateParkingLotDto createParkingLotDtoWithNullPhoneAndMobileNumbers = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto(null, null, "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithNullPhoneAndMobileNumbers = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto(null, null, "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
-        CreateParkingLotDto createParkingLotDtoWithEmptyPhoneAndMobileNumbers = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("", "", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithEmptyPhoneAndMobileNumbers = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("", "", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
         String divisionId = "1";
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
@@ -121,9 +111,9 @@ class ParkingLotServiceTest {
     @Test
     void createParkingLot_givenNullOrEmptyPhoneNumber_returnsParkingLotEntity() {
 
-        CreateParkingLotDto createParkingLotDtoWithNullPhone = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto(null, "0465897452", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithNullPhone = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto(null, "0465897452", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
-        CreateParkingLotDto createParkingLotDtoWithEmptyPhone = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("054645252", "0465897452", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto createParkingLotDtoWithEmptyPhone = new CreateParkingLotDto("parking lot a", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("054645252", "0465897452", "test@test.test", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
 
         ParkingLot parkingLotNullPhone = new ParkingLot(1, "parking lot a", Category.UNDERGROUND_BUILDING, 500, new ContactPerson(null, "0465789312", "lll@mmm.ddd", new Address("contact street test", "65", 1180, "Uccle")), DIVISION, new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
 
@@ -213,7 +203,7 @@ class ParkingLotServiceTest {
                 new CreateContactPersonDto("023156452", "0465897452", invalidEmail,
                         new Address("Contact test street", "66", 1180, "Uccle")),
                 new Address("Parking lot test street", "77", 1000, "Brussels"),
-                2, 500);
+                2);
     }
 
 

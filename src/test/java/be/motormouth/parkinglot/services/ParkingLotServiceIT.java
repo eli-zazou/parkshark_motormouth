@@ -24,7 +24,7 @@ public class ParkingLotServiceIT {
     @Test
     void createParkingLot(){
         //create new parking lot then get it by his name from the db to check if present
-        CreateParkingLotDto parkingLotZDto = new CreateParkingLotDto("parking lot Z", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2, 500);
+        CreateParkingLotDto parkingLotZDto = new CreateParkingLotDto("parking lot Z", Category.UNDERGROUND_BUILDING, 500, new CreateContactPersonDto("023456622", "0469456878", "mmm@mmm.mmm", new Address("Contact test street", "66", 1180, "Uccle")), new Address("Parking lot test street", "77", 1000, "Brussels"), 2);
         ParkingLot parkingLotZEntity = parkingLotService.createParkingLot(parkingLotZDto, String.valueOf(DIVISION.getId()));
         ParkingLot parkingLotZEntityFromDb = parkingLotPanacheRepository.getParkingLotByName(parkingLotZDto.name());
         Assertions.assertEquals(parkingLotZEntityFromDb.getName(), parkingLotZEntity.getName());
