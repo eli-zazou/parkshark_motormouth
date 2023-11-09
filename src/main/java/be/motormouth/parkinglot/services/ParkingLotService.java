@@ -17,13 +17,16 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 public class ParkingLotService {
     private final org.jboss.logging.Logger logger = Logger.getLogger(ParkingLotService.class);
-    @Inject
-    ParkingLotPanacheRepository parkingLotPanacheRepository;
-    @Inject
-    DivisionService divisionService;
+    private final ParkingLotPanacheRepository parkingLotPanacheRepository;
+    private final DivisionService divisionService;
     @Inject
     ContactPersonPanacheRepository contactPersonRepository;
     private String errorMessage;
+
+    public ParkingLotService(ParkingLotPanacheRepository parkingLotPanacheRepository, DivisionService divisionService) {
+        this.parkingLotPanacheRepository = parkingLotPanacheRepository;
+        this.divisionService = divisionService;
+    }
 
     @Transactional
     public ParkingLot createParkingLot(CreateParkingLotDto createParkingLotDto, String divisionId) {
@@ -44,7 +47,8 @@ public class ParkingLotService {
     }
 
     private void validateInput(CreateParkingLotDto createParkingLotDto) {
-        if (parkingLotPanacheRepository.getParkingLotByName(createParkingLotDto.name()) != null)
+        ParkingLot parkingLotByName = parkingLotPanacheRepository.getParkingLotByName(createParkingLotDto.name());
+        if (parkingLotByName != null)
             throw new IllegalArgumentException("The name of the parking lot already exists. Choose another name.");
 
         if(createParkingLotDto.createContactPersonDto() == null)
@@ -73,12 +77,13 @@ public class ParkingLotService {
                             Dot isn’t allowed at the start and end of the local part.\n
                             Consecutive dots aren’t allowed.\n
                             For the local part, a maximum of 64 characters are allowed.\n
-                            
+                                                        
                             For the domain part : \n
                             Numeric values allowed from 0 to 9.\n
                             We allow both uppercase and lowercase letters from a to z.\n
-                            Hyphen “-” and dot “.” aren’t allowed at the start and end of the domain part.\n
-                            No consecutive dots.\n                        
+                            Hyphen “-” aren’t allowed at the start and end of the domain part.\n
+                            Dot “.” aren’t allowed at the end of the domain part.\n
+                            No consecutive dots.\n                   
                             """);
     }
 }
