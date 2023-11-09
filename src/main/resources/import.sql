@@ -23,6 +23,7 @@ insert into member(id, firstname, lastname, phone_number,
                    email_address, license_plate_number, issuing_country, registration_date, membership_level,streetName, streetNumber, postalCode, postalLabel)
 values (nextval('member_seq'), 'aaa', 'bbb', '0123456789',
         'aaa.bbb@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
+
 --User
 insert into users(id,password,role,user_id,fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);
@@ -120,6 +121,3 @@ insert into parking_lot(id,
                         fk_division_id)
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
-
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);

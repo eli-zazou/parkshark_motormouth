@@ -76,6 +76,7 @@ public class DivisionController {
     @Path("/{id}/parkinglot")
     public Response createParkingLot(CreateParkingLotDto createParkingLotDto, @PathParam("id")String divisionId){
         try {
+            //User connectedUser = securityService.validateAuthorization(authorization, CREATE_PARKING_LOT);
             return Response.ok().entity(ParkingLotMapper.toDto(parkingLotService.createParkingLot(createParkingLotDto, divisionId))).build();
         } catch (Exception e) {
             return Response.status(BAD_REQUEST).entity(e.getMessage()).build();

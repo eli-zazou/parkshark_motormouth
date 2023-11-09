@@ -14,7 +14,7 @@ public class ParkingLot {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parking_lot_seq")
     @SequenceGenerator(name = "parking_lot_seq", sequenceName = "parking_lot_seq", allocationSize = 1)
-    private Long id;
+    private long id;
 
     private String name;
 
@@ -43,18 +43,30 @@ public class ParkingLot {
     protected ParkingLot() {
     }
 
-    public ParkingLot(String name, Category category, int capacity, ContactPerson contactPerson, Address address, double pricePerHourInEuro, int numberOfPlacesAvailable, Division division) {
+    public ParkingLot(long id, String name, Category category, int capacity, ContactPerson contactPerson, Division division, Address address, double pricePerHourInEuro, int numberOfPlacesAvailable) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.capacity = capacity;
         this.contactPerson = contactPerson;
+        this.division = division;
         this.address = address;
         this.pricePerHourInEuro = pricePerHourInEuro;
         this.numberOfPlacesAvailable = numberOfPlacesAvailable;
-        this.division = division;
     }
 
-    public Long getId() {
+    public ParkingLot(String name, Category category, int capacity, ContactPerson contactPerson, Division division, Address address, double pricePerHourInEuro, int numberOfPlacesAvailable) {
+        this.name = name;
+        this.category = category;
+        this.capacity = capacity;
+        this.contactPerson = contactPerson;
+        this.division = division;
+        this.address = address;
+        this.pricePerHourInEuro = pricePerHourInEuro;
+        this.numberOfPlacesAvailable = numberOfPlacesAvailable;
+    }
+
+    public long getId() {
         return id;
     }
 
