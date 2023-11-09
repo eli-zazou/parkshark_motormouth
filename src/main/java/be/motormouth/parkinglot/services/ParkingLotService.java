@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 @ApplicationScoped
 @Transactional
 public class ParkingLotService {
-    private final org.jboss.logging.Logger logger = Logger.getLogger(ParkingLotService.class);
     private final ParkingLotPanacheRepository parkingLotPanacheRepository;
     private final DivisionService divisionService;
     @Inject
