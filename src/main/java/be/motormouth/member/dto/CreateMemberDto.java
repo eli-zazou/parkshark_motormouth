@@ -7,15 +7,19 @@ import be.motormouth.member.entities.MembershipLevel;
 import java.time.LocalDate;
 
 public class CreateMemberDto {
-    private final String firstName;
-    private final String lastName;
-    private final String phoneNumber;
-    private final String emailAddress;
-    private final Address address;
-    private final LicensePlate licensePlate;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String emailAddress;
+    private Address address;
+    private LicensePlate licensePlate;
     private MembershipLevel membershipLevel;
-    private final String username;
-    private final String password;
+    private String username;
+    private String password;
+
+    protected CreateMemberDto(){
+
+    }
 
     public CreateMemberDto(String firstName, String lastName, String phoneNumber, String emailAddress, Address address, LicensePlate licensePlate, MembershipLevel membershipLevel, String username, String password) {
         this.firstName = firstName;

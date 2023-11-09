@@ -57,7 +57,7 @@ class MemberServiceTest {
     void test_createMember() {
 
         CreateMemberDto newMemberDto = new CreateMemberDto("Carmen", "Lastname", "0452635241", "carmen@email.be",
-                new Address("EuroStreet", "11", 3000, "Leuven"), new LicensePlate("1-HUY528","NL"),  LocalDate.now(), MembershipLevel.SILVER, "username", "password");
+                new Address("EuroStreet", "11", 3000, "Leuven"), new LicensePlate("1-HUY528","NL"), MembershipLevel.SILVER, "username", "password");
 
         memberService.createMember(newMemberDto);
 
@@ -74,7 +74,7 @@ class MemberServiceTest {
     @Test
     public void test_CreateMember_InvalidInput(){
         CreateMemberDto createMemberDto = new CreateMemberDto("Carmen", "Lastname", "0452635241", "carmenemail.be",
-                new Address("EuroStreet", "11", 3000, "Leuven"), new LicensePlate("1-HUY528","NL"),  LocalDate.now(), MembershipLevel.SILVER, "username", "password");
+                new Address("EuroStreet", "11", 3000, "Leuven"), new LicensePlate("1-HUY528","NL"), MembershipLevel.SILVER, "username", "password");
 
         assertThrows(IllegalArgumentException.class, () -> memberService.createMember(createMemberDto));
 
