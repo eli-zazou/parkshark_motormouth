@@ -27,7 +27,7 @@ public class ParkingLot {
     @Cascade(CascadeType.PERSIST)
     private ContactPerson contactPerson;
 
-    @ManyToOne(cascade = jakarta.persistence.CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "FK_DIVISION_ID")
     private Division division;
 

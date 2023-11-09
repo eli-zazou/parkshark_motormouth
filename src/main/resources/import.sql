@@ -1,6 +1,7 @@
 -- This file allow to write SQL commands that will be emitted in test and dev.
 -- The commands are commented as their support depends of the database
-SET search_path TO parkshark;
+SET
+search_path TO parkshark;
 --Division
 insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Top Level', 'Original Top Level', 'Director', null);
@@ -116,6 +117,49 @@ insert into parking_lot(id,
                         fk_division_id)
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
+-- allocation
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       allocationstatus,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 'NOT_YET_INVOICED', 1, 1);
+insert into allocation(id,
+                       starttime,
+                       endtime,
+                       licenseplate,
+                       allocationstatus,
+                       fk_member_id,
+                       fk_parking_lot_id)
+values (nextval('allocation_seq'), '2023-11-07 15:20:10.226726', '2023-11-08 09:26:26.226726', '1-ABC-111',
+        'NOT_YET_INVOICED', 2, 1);
+
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-03', '2023-02-04', 0, '2023-02-03', 1);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-05', '2023-02-06', 1, '2023-02-05', 2);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    invoicestatus,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 0, '2023-02-07', 3);
 
 -- allocation
 insert into allocation(id,

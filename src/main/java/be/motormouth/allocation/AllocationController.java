@@ -2,6 +2,7 @@ package be.motormouth.allocation;
 
 import be.motormouth.allocation.dto.AllocationDto;
 import be.motormouth.allocation.dto.CreateAllocationDto;
+import be.motormouth.allocation.entities.Allocation;
 import be.motormouth.allocation.services.AllocationService;
 import be.motormouth.allocation.services.mapper.AllocationMapper;
 import be.motormouth.security.SecurityService;
@@ -11,7 +12,9 @@ import jakarta.ws.rs.core.MediaType;
 import org.jboss.resteasy.reactive.ResponseStatus;
 import org.jboss.resteasy.reactive.RestHeader;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import static be.motormouth.security.Feature.*;
 
@@ -53,8 +56,27 @@ public class AllocationController {
     }
 
     @GET
+    @Path("/members/{id}")
     @ResponseStatus(200)
-    @Path("/{id}")
+    public Collection<AllocationDto> getParkingAllocationForMember(@RestHeader String authorization,
+                                                                   @PathParam("id") Long id,
+                                                                   @QueryParam("active") Optional<Boolean> active) {
+        User connectedUser = securityService.validateAuthorization(authorization, GET_ALL_PARKING_ALLOCATIONS_OF_MEMBER);
+
+        Collection<Allocation> result;
+
+        if (active.isEmpty()) {
+            result = allocationService.getAllocationsForMember(id);
+        } else {
+            result = allocationService.getAllocationsForMember(id, active.get());
+        }
+        return AllocationMapper.mapToDto(result);
+    }
+
+
+    @GET
+    @ResponseStatus(200)
+    @Path("/parkingLot/{id}")
     public Collection<AllocationDto> viewAllocationsByParkingLot(
             @RestHeader String authorization,
             @PathParam("id") Long parkingLotId,

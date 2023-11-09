@@ -6,6 +6,7 @@ import be.motormouth.allocation.entities.Allocation;
 import be.motormouth.exceptions.*;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
+import be.motormouth.member.services.MemberService;
 import be.motormouth.parkinglot.entities.ParkingLot;
 import be.motormouth.parkinglot.services.ParkingLotService;
 import be.motormouth.security.users.User;
@@ -21,12 +22,15 @@ import java.util.Collection;
 public class AllocationService {
     private final AllocationPanacheRepository allocationPanacheRepository;
     private final ParkingLotService parkingLotService;
+    private final MemberService memberService;
     private final Logger logger = Logger.getLogger(ParkingLotService.class);
     private String errorMessage;
 
-    public AllocationService(AllocationPanacheRepository allocationPanacheRepository, ParkingLotService parkingLotService) {
+    public AllocationService(AllocationPanacheRepository allocationPanacheRepository, ParkingLotService parkingLotService,
+                             MemberService memberService) {
         this.allocationPanacheRepository = allocationPanacheRepository;
         this.parkingLotService = parkingLotService;
+        this.memberService = memberService;
     }
 
     public Allocation startAllocation(CreateAllocationDto createAllocationDto, User connectedUser) {
@@ -140,5 +144,18 @@ public class AllocationService {
 
         }
 
+    }
+
+    public Collection<Allocation> getAllocationsForMember(Long id) {
+        memberService.getMemberById(id);
+        return allocationPanacheRepository.getAllAllocationsForMemberId(id);
+    }
+
+    public Collection<Allocation> getAllocationsForMember(Long id, boolean active) {
+        memberService.getMemberById(id);
+        if (active) {
+            return allocationPanacheRepository.getActiveAllocationsForMemberId(id);
+        }
+        return allocationPanacheRepository.getStoppedAllocationsForMemberId(id);
     }
 }
