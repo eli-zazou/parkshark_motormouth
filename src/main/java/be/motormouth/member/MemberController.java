@@ -47,8 +47,6 @@ public class MemberController {
         return MemberMapper.toDto(memberService.createMember(createMemberDto));
     }
 
-    @PATCH
-    public void setMembershipLevel(MembershipLevel membershipLevel){
+    // todo can we update our membership level??
 
-    }
 }

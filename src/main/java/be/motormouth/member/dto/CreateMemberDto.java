@@ -13,19 +13,17 @@ public class CreateMemberDto {
     private final String emailAddress;
     private final Address address;
     private final LicensePlate licensePlate;
-    private final LocalDate registrationDate;
     private MembershipLevel membershipLevel;
     private final String username;
     private final String password;
 
-    public CreateMemberDto(String firstName, String lastName, String phoneNumber, String emailAddress, Address address, LicensePlate licensePlate, LocalDate registrationDate, MembershipLevel membershipLevel, String username, String password) {
+    public CreateMemberDto(String firstName, String lastName, String phoneNumber, String emailAddress, Address address, LicensePlate licensePlate, MembershipLevel membershipLevel, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.address = address;
         this.licensePlate = licensePlate;
-        this.registrationDate = registrationDate;
         this.membershipLevel = membershipLevel;
         this.username = username;
         this.password = password;
@@ -53,10 +51,6 @@ public class CreateMemberDto {
 
     public LicensePlate getLicensePlate() {
         return licensePlate;
-    }
-
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
     }
 
     public MembershipLevel getMembershipLevel() {

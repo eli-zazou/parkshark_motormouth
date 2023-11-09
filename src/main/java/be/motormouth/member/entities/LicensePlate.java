@@ -11,6 +11,15 @@ public class LicensePlate {
     @Column(name = "issuing_country" )
     private String issuingCountry;
 
+    protected LicensePlate() {
+
+    }
+
+    public LicensePlate(String licensePlateNumber, String issuingCountry){
+        this.licensePlateNumber = licensePlateNumber;
+        this.issuingCountry = issuingCountry;
+    }
+
     public java.lang.String getLicensePlateNumber() {
         return licensePlateNumber;
     }
