@@ -2,7 +2,9 @@ package be.motormouth.parkinglot.services;
 
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.services.DivisionService;
+import be.motormouth.exceptions.InvalidEmailException;
 import be.motormouth.exceptions.UnknownParkingLotException;
+import be.motormouth.globalservices.validation.EmailValidator;
 import be.motormouth.parkinglot.ContactPersonPanacheRepository;
 import be.motormouth.parkinglot.ParkingLotPanacheRepository;
 import be.motormouth.parkinglot.dtos.CreateParkingLotDto;
@@ -11,8 +13,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
-
-import java.util.regex.Pattern;
 
 @ApplicationScoped
 public class ParkingLotService {
@@ -57,33 +57,14 @@ public class ParkingLotService {
         if (createParkingLotDto.createContactPersonDto().email() == null || createParkingLotDto.createContactPersonDto().email().isEmpty())
             throw new IllegalArgumentException("Contact person's email is required");
 
-        validateEmail(createParkingLotDto);
+        if(!EmailValidator.isEmailValid(createParkingLotDto.createContactPersonDto().email()))
+            throw new InvalidEmailException(createParkingLotDto.createContactPersonDto().email());
+        //validateEmail(createParkingLotDto);
 
         if ((createParkingLotDto.createContactPersonDto().phoneNumber() == null || createParkingLotDto.createContactPersonDto().phoneNumber().isEmpty()) &&
                 (createParkingLotDto.createContactPersonDto().mobilePhoneNumber() == null || createParkingLotDto.createContactPersonDto().mobilePhoneNumber().isEmpty()))
             throw new IllegalArgumentException("At least one phone number is required");
     }
 
-    private static void validateEmail(CreateParkingLotDto createParkingLotDto) {
-        String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-        if (!Pattern.compile(regex).matcher(createParkingLotDto.createContactPersonDto().email()).matches())
-            throw new IllegalArgumentException("Contact person's email \"" + createParkingLotDto.createContactPersonDto().email()  + "\" is not valid. Follow those rules : \n" +
-                    """
-                            For the local part : \n
-                            Numeric values allowed from 0 to 9.\n
-                            Both uppercase and lowercase letters from a to z are allowed.\n
-                            Allowed are underscore “_”, hyphen “-“, and dot “.”\n
-                            Dot isn’t allowed at the start and end of the local part.\n
-                            Consecutive dots aren’t allowed.\n
-                            For the local part, a maximum of 64 characters are allowed.\n
-                                                        
-                            For the domain part : \n
-                            Numeric values allowed from 0 to 9.\n
-                            We allow both uppercase and lowercase letters from a to z.\n
-                            Hyphen “-” aren’t allowed at the start and end of the domain part.\n
-                            Dot “.” aren’t allowed at the end of the domain part.\n
-                            No consecutive dots.\n                   
-                            """);
-    }
 }

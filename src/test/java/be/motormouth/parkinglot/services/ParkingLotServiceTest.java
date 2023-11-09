@@ -3,6 +3,7 @@ package be.motormouth.parkinglot.services;
 import be.motormouth.division.DivisionPanacheRepository;
 import be.motormouth.division.entities.Division;
 import be.motormouth.division.services.DivisionService;
+import be.motormouth.exceptions.InvalidEmailException;
 import be.motormouth.member.entities.Address;
 import be.motormouth.parkinglot.Category;
 import be.motormouth.parkinglot.ParkingLotPanacheRepository;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static be.motormouth.exceptions.InvalidEmailException.EMAIL_VALIDATION_RULES;
 import static be.motormouth.testConstants.ParkingLotTestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +51,8 @@ class ParkingLotServiceTest {
 
     @Test
     void createParkingLot_givenNullDivisionId_throwsIllegalArgumentExceptionWithRightMessage() {
-        testCreateParkingLotDtoWithInvalidEmail(CREATE_PARKING_LOT_DTO, null, "division id must not be null");
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> parkingLotService.createParkingLot(CREATE_PARKING_LOT_DTO, null));
+        Assertions.assertEquals("division id must not be null", thrown.getMessage());
     }
 
     @Test
@@ -58,7 +61,8 @@ class ParkingLotServiceTest {
         Mockito.when(parkingLotPanacheRepository.getParkingLotByName(any(String.class))).thenReturn(PARKING_LOT);
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
 
-        testCreateParkingLotDtoWithInvalidEmail(CREATE_PARKING_LOT_DTO, divisionId, "The name of the parking lot already exists. Choose another name.");
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> parkingLotService.createParkingLot(CREATE_PARKING_LOT_DTO, divisionId));
+        Assertions.assertEquals("The name of the parking lot already exists. Choose another name.", thrown.getMessage());
     }
 
     @Test
@@ -68,7 +72,8 @@ class ParkingLotServiceTest {
         String divisionId = "1";
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
 
-        testCreateParkingLotDtoWithInvalidEmail(createParkingLotDtoWithNullContactPerson, divisionId, "Contact person is required");
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> parkingLotService.createParkingLot(createParkingLotDtoWithNullContactPerson, divisionId));
+        Assertions.assertEquals("Contact person is required", thrown.getMessage());
     }
 
     @Test
@@ -132,7 +137,7 @@ class ParkingLotServiceTest {
     }
 
     @Test
-    void createParkingLot_givenInvalidEmail_returnsIllegalArgumentExceptionWithRightMessage() {
+    void createParkingLot_givenInvalidEmail_returnsInvalidEmailExceptionWithRightMessage() {
         String invalidEmailLocalSpecialCharacter = "test$@gmail.com";
         String invalidEmailDotStartLocal = ".test@gmail.com";
         String invalidEmailDotEndLocal = "test.@gmail.com";
@@ -164,6 +169,7 @@ class ParkingLotServiceTest {
         String divisionId = "1";
         Mockito.when(divisionPanacheRepository.findDivisionById(any(Long.class))).thenReturn(Optional.of(DIVISION));
 
+        testCreateParkingLotDtoWithInvalidEmail(createParkingLotDtoWithInvalidEmailLocalSpecialCharacter, divisionId, getExpectedMessage(createParkingLotDtoWithInvalidEmailLocalSpecialCharacter));
         testCreateParkingLotDtoWithInvalidEmail(createParkingLotDtoWithInvalidEmailDotStartLocal, divisionId, getExpectedMessage(createParkingLotDtoWithInvalidEmailDotStartLocal));
         testCreateParkingLotDtoWithInvalidEmail(createParkingLotDtoWithInvalidEmailDotEndLocal, divisionId, getExpectedMessage(createParkingLotDtoWithInvalidEmailDotEndLocal));
         testCreateParkingLotDtoWithInvalidEmail(createParkingLotDtoWithInvalidEmailDotEndDomain, divisionId, getExpectedMessage(createParkingLotDtoWithInvalidEmailDotEndDomain));
@@ -175,27 +181,29 @@ class ParkingLotServiceTest {
     }
 
     private void testCreateParkingLotDtoWithInvalidEmail(CreateParkingLotDto createParkingLotDtoWithInvalidEmail, String divisionId, String expectedMessage) {
-        IllegalArgumentException thrownInvalidEmail = Assertions.assertThrows(IllegalArgumentException.class, () -> parkingLotService.createParkingLot(createParkingLotDtoWithInvalidEmail, divisionId));
+        InvalidEmailException thrownInvalidEmail = Assertions.assertThrows(InvalidEmailException.class, () -> parkingLotService.createParkingLot(createParkingLotDtoWithInvalidEmail, divisionId));
         Assertions.assertEquals(expectedMessage, thrownInvalidEmail.getMessage());
     }
 
     private static String getExpectedMessage(CreateParkingLotDto createParkingLotDtoWithInvalidEmail) {
-        return "Contact person's email \"" + createParkingLotDtoWithInvalidEmail.createContactPersonDto().email() + "\" is not valid. Follow those rules : \n" + """
-                For the local part : \n
-                Numeric values allowed from 0 to 9.\n
-                Both uppercase and lowercase letters from a to z are allowed.\n
-                Allowed are underscore “_”, hyphen “-“, and dot “.”\n
-                Dot isn’t allowed at the start and end of the local part.\n
-                Consecutive dots aren’t allowed.\n
-                For the local part, a maximum of 64 characters are allowed.\n
-                                        
-                For the domain part : \n
-                Numeric values allowed from 0 to 9.\n
-                We allow both uppercase and lowercase letters from a to z.\n
-                Hyphen “-” aren’t allowed at the start and end of the domain part.\n
-                Dot “.” aren’t allowed at the end of the domain part.\n
-                No consecutive dots.\n        
-                """;
+//        return "Contact person's email \"" + createParkingLotDtoWithInvalidEmail.createContactPersonDto().email() + "\" is not valid. Follow those rules : \n" + """
+//                For the local part : \n
+//                Numeric values allowed from 0 to 9.\n
+//                Both uppercase and lowercase letters from a to z are allowed.\n
+//                Allowed are underscore “_”, hyphen “-“, and dot “.”\n
+//                Dot isn’t allowed at the start and end of the local part.\n
+//                Consecutive dots aren’t allowed.\n
+//                For the local part, a maximum of 64 characters are allowed.\n
+//
+//                For the domain part : \n
+//                Numeric values allowed from 0 to 9.\n
+//                We allow both uppercase and lowercase letters from a to z.\n
+//                Hyphen “-” aren’t allowed at the start and end of the domain part.\n
+//                Dot “.” aren’t allowed at the end of the domain part.\n
+//                No consecutive dots.\n
+//                """;
+        return "Email \"" + createParkingLotDtoWithInvalidEmail.createContactPersonDto().email() + "\" is not valid. Follow those rules : \n" +
+                EMAIL_VALIDATION_RULES;
     }
 
     private static CreateParkingLotDto createCreateParkingLotDtoWithInvalidEmail(String invalidEmail) {
