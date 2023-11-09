@@ -12,12 +12,12 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.jboss.logging.Logger;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @ApplicationScoped
 @Transactional
 public class ParkingLotService {
-    private final org.jboss.logging.Logger logger = Logger.getLogger(ParkingLotService.class);
     private final ParkingLotPanacheRepository parkingLotPanacheRepository;
     private final DivisionService divisionService;
     @Inject

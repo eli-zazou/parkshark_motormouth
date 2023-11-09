@@ -1,6 +1,6 @@
 -- This file allow to write SQL commands that will be emitted in test and dev.
 -- The commands are commented as their support depends of the database
-SET search_path TO parkshark;
+--SET search_path TO parkshark;
 --Division
 insert into division (id, name, originalname, director, fk_division_id)
 values (nextval('division_seq'), 'Top Level', 'Original Top Level', 'Director', null);
@@ -52,7 +52,7 @@ insert into contact_person(id,
                            streetnumber,
                            postalcode,
                            postallabel)
-values(nextval('contact_person_seq'), '024568737', '0465789633', 'bbb@bbb.bbb', 'Not again street', '66', '1001', 'Ghent');
+values(nextval('contact_person_seq'), '024568737', null, 'bbb@bbb.bbb', 'Not again street', '66', '1001', 'Ghent');
 
 insert into contact_person(id,
                            phone_number,
@@ -62,7 +62,7 @@ insert into contact_person(id,
                            streetnumber,
                            postalcode,
                            postallabel)
-values(nextval('contact_person_seq'), '024568738', '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002', 'Antwerp');
+values(nextval('contact_person_seq'), null, '0465789634', 'ccc@ccc.ccc', 'No more street', '67', '1002', 'Antwerp');
 
 -- ParkingLot
 insert into parking_lot(id,
