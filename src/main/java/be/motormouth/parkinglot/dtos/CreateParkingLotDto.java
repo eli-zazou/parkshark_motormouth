@@ -9,8 +9,7 @@ public record CreateParkingLotDto(String name,
                                   int capacity,
                                   CreateContactPersonDto createContactPersonDto,
                                   Address address,
-                                  double pricePerHourInEuro,
-                                  int numberOfPlacesAvailable) {
+                                  double pricePerHourInEuro) {
     @Override
     public String toString() {
         return "CreateParkingLotDto{" +
@@ -20,7 +19,6 @@ public record CreateParkingLotDto(String name,
                 ", createContactPersonDto=" + createContactPersonDto +
                 ", address=" + address +
                 ", pricePerHourInEuro=" + pricePerHourInEuro +
-                ", numberOfPlacesAvailable=" + numberOfPlacesAvailable +
                 '}';
     }
 }
