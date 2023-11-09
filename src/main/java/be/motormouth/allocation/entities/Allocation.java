@@ -22,7 +22,6 @@ public class Allocation {
     private String licensePlate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    // TODO do we need status?
 
     public Allocation(ParkingLot parkingLot, Member member, String licensePlate) {
         this.parkingLot = parkingLot;

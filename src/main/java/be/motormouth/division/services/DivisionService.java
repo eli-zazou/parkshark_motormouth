@@ -7,6 +7,7 @@ import be.motormouth.division.entities.ListDivision;
 import be.motormouth.exceptions.UnknownDivisionException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -29,24 +30,33 @@ public class DivisionService {
         if (divisionId.equals("ALL")) return divisionPanacheRepository.getAllDivisions();
         return divisionPanacheRepository.getAllDivisions()
                 .stream()
-                .filter((division)-> division.getId() == Long.parseLong(divisionId))
+                .filter((division) -> division.getId() == Long.parseLong(divisionId))
                 .collect(Collectors.toList());
     }
-//    public List<ListDivision> viewAllDivisionsTopDown() {
-//        return divisionPanacheRepository.getMainDivisions()
-//                .stream()
-//                .map(division -> listAllSubdivisions(division))
-//                .collect(Collectors.toList());
-//    }
-//    private ListDivision listAllSubdivisions(Division division) {
-//        return divisionPanacheRepository.getSubDivisions(division)
-//                .stream()
-//                .map(subdivision -> DivisionMapper.toList(division, listAllSubdivisions(subdivision)))
-//                .collect(Collectors.toList());
-//    }
+
+    public List<ListDivision> viewAllDivisionsTopDown() {
+        return divisionPanacheRepository.getMainDivisions()
+                .stream()
+                .map(division -> DivisionMapper.toListDivision(division, getAllSubdivisions(division)))
+                .collect(Collectors.toList());
+    }
+
+    private List<ListDivision> getAllSubdivisions(Division division) {
+        try {
+            return divisionPanacheRepository.getSubDivisions(division)
+                    .stream()
+                    .map(subdivision -> DivisionMapper.toListDivision(subdivision, getAllSubdivisions(subdivision)))
+                    .collect(Collectors.toList());
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
     public Division viewDivisionsById(String divisionId) {
         return divisionPanacheRepository.findDivisionById(Long.parseLong(divisionId))
-                .orElseThrow(()-> { errorMessage = "Division " + divisionId + " not found";
+                .orElseThrow(() -> {
+                    errorMessage = "Division " + divisionId + " not found";
                     logger.info(errorMessage);
                     return new UnknownDivisionException(errorMessage);
                 });
