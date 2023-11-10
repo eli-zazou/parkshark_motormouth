@@ -184,11 +184,4 @@ insert into allocation(id,
                        status)
 values (nextval('allocation_seq'), '2023-10-07 15:20:10.226726', '2023-10-08 09:26:26.226726', '1-ABC-111', 2, 1, 'NOT_YET_INVOICED');
 
-insert into allocation(id,
-                       starttime,
-                       endtime,
-                       licenseplate,
-                       fk_member_id,
-                       fk_parking_lot_id,
-                       status)
-values (nextval('allocation_seq'), '2023-10-22 08:20:20', null, '1-CFR-123', 3, 2, 'NOT_YET_INVOICED');
+
