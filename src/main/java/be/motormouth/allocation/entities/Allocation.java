@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Entity
@@ -93,5 +94,18 @@ public class Allocation {
 
     public void setAllocationStatus(AllocationStatus allocationStatus) {
         this.allocationStatus = allocationStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Allocation that = (Allocation) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
