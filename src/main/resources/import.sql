@@ -29,6 +29,7 @@ insert into division (id,
                       director,
                       fk_division_id)
 values (nextval('division_seq'), 'Sub Level 2', 'Original Sub Level 2', 'Director Lvl2', 2);
+
 --Member
 insert into member(id,
                    firstname,
@@ -65,15 +66,28 @@ insert into member(id,
                    streetName, streetNumber, postalCode, postalLabel)
 values (nextval('member_seq'), 'Member3', 'bbb', '0123456789',
         'aaa.bbb@mc.be', '1-CFR-123', 'FR', '2023-11-07', 'SILVER', 'chien orange', '58', 1000, 'BRUSSEL');
+
 --User
-insert into users(id,password,role,user_id,fk_member_id)
+insert into users(id,
+                  password,
+                  role,user_id,
+                  fk_member_id)
 values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MANAGER','admin',1);
 
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member',2);
+insert into users(id,
+                  password,
+                  role,
+                  user_id,
+                  fk_member_id)
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member2',2);
 
-insert into users(id,password,role,user_id,fk_member_id)
-values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member2',3);
+insert into users(id,
+                  password,
+                  role,
+                  user_id,
+                  fk_member_id)
+values (nextval('users_seq'), '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4' ,'MEMBER','member3',3);
+
 -- ContactPerson
 insert into contact_person(id,
                            phone_number,
@@ -150,6 +164,7 @@ insert into parking_lot(id,
                         fk_division_id)
 values (nextval('parking_lot_seq'), 'Parking Lot C', 1500, 0,
         1500, 5, 'Test3 street', '8', '1020', 'Laeken', 3, 3);
+
 --Allocation
 insert into allocation(id,
                        starttime,
@@ -159,6 +174,7 @@ insert into allocation(id,
                        fk_parking_lot_id,
                        status)
 values (nextval('allocation_seq'), '2023-11-07 20:20:20', null, '1-ABC-111', 1, 1, 'NOT_YET_INVOICED');
+
 insert into allocation(id,
                        starttime,
                        endtime,
@@ -166,15 +182,29 @@ insert into allocation(id,
                        fk_member_id,
                        fk_parking_lot_id,
                        status)
-
 values (nextval('allocation_seq'), '2023-10-07 15:20:10.226726', '2023-10-08 09:26:26.226726', '1-ABC-111', 2, 1, 'NOT_YET_INVOICED');
 
 --Invoice
-insert into invoice(id, creationdate, expirationdate, status, invoicedate, fk_member_id)
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
 values (nextval('invoice_seq'), '2023-02-03', '2023-02-04', 'OPEN', '2023-02-03', 1);
 
-insert into invoice(id, creationdate, expirationdate, status, invoicedate, fk_member_id)
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
 values (nextval('invoice_seq'), '2023-02-05', '2023-02-06', 'CLOSED', '2023-02-05', 2);
 
-insert into invoice(id, creationdate, expirationdate, status, invoicedate, fk_member_id)
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
 values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 'OPEN', '2023-02-07', 3);
