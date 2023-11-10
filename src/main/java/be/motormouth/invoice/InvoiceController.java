@@ -38,8 +38,7 @@ public class InvoiceController {
     @Path("/{id}")
     public Response markInvoiceAsClosed(@RestHeader String authorization, @PathParam("id") String invoiceId){
         User connectedUser = securityService.validateAuthorization(authorization, Feature.MARK_INVOICES_CLOSED);
-        invoiceService.markAsClosed(invoiceId);
-        return Response.ok().build();
+        return Response.ok().entity(InvoiceMapper.toDTO(invoiceService.markAsClosed(invoiceId))).build();
     }
 
 }
