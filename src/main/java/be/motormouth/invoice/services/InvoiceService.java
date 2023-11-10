@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -38,10 +39,13 @@ public class InvoiceService {
 
     public Invoice getMonthlyInvoice(User authorisedUser) {
         LocalDateTime invoiceDate = calculateInvoiceDate();
+        // return exisitng invoice when exists
+        Optional<Invoice> existingInvoice = invoicePanacheRepository.findInvoice(authorisedUser.getMember(), invoiceDate);
+        if (existingInvoice.isPresent()) return existingInvoice.get();
         //
         if (getAllOpenAllocations(invoiceDate, authorisedUser.getMember()).isEmpty()) throw new IllegalArgumentException("Nothing to Invoice");
-        Invoice invoice = new Invoice(invoiceDate, authorisedUser.getMember(), LocalDate.now(), LocalDate.now().plusDays(30), InvoiceStatus.OPEN, null);
         //
+        Invoice invoice = new Invoice(invoiceDate, authorisedUser.getMember(), LocalDate.now(), LocalDate.now().plusDays(30), InvoiceStatus.OPEN, null);
         invoice.setInvoiceItems(getAllInvoiceItems(invoice));
         invoicePanacheRepository.createInvoice(invoice);
         return invoice;
