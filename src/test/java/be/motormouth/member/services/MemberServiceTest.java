@@ -7,10 +7,13 @@ import be.motormouth.member.entities.Address;
 import be.motormouth.member.entities.LicensePlate;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
+import be.motormouth.security.users.UserRepository;
+import groovyjarjarantlr4.v4.runtime.TokenStreamRewriter;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +32,8 @@ class MemberServiceTest {
 
     @Inject
     MemberPanacheRepository memberRepository;
+    @Inject
+    UserRepository userRepository;
 
     @Test
     void test_getAllMembers() {
@@ -54,6 +59,7 @@ class MemberServiceTest {
     }
 
     @Test
+    @Transactional
     void test_createMember() {
 
         CreateMemberDto newMemberDto = new CreateMemberDto("Carmen", "Lastname", "0452635241", "carmen@email.be",
@@ -69,6 +75,7 @@ class MemberServiceTest {
         assertTrue(getNewMember.isPresent());
         assertEquals("Carmen", getNewMember.get().getFirstName());
 
+        userRepository.delete("userId", "username");
         memberRepository.delete("emailAddress", "carmen@email.be");
     }
 

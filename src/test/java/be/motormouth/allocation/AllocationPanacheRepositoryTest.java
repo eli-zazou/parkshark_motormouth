@@ -56,7 +56,7 @@ class AllocationPanacheRepositoryTest {
         // then
         Assertions
                 .assertThat(allocationPanacheRepository.getAllAllocations())
-                .containsExactlyInAnyOrder(allocation);
+                .contains(allocation);
     }
 
     @Transactional

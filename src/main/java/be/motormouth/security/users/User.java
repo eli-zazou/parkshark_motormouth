@@ -3,6 +3,7 @@ package be.motormouth.security.users;
 import be.motormouth.member.entities.Member;
 import be.motormouth.security.Feature;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "USERS")

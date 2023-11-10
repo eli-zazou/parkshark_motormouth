@@ -6,12 +6,14 @@ import be.motormouth.member.entities.LicensePlate;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
 import be.motormouth.member.services.MemberService;
+import be.motormouth.security.users.UserRepository;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -30,6 +32,9 @@ class MemberControllerTest {
 
     @Inject
     MemberPanacheRepository memberRepository;
+
+    @Inject
+    UserRepository userRepository;
 
     @Test
     @Order(1)
@@ -105,6 +110,7 @@ class MemberControllerTest {
 
     @Test
     @Order(2)
+    @Transactional
     void createMember(){
         JsonObject address = Json.createObjectBuilder()
                 .add("streetName", "OUIouiLaan")
@@ -138,6 +144,9 @@ class MemberControllerTest {
                 .body("registrationDate", equalTo(String.valueOf(LocalDate.now())))
                 .statusCode(201);
 
+
+        userRepository.delete("userId", "ouioui");
         memberRepository.delete("emailAddress", "taxi@gmail.com");
+
     }
 }

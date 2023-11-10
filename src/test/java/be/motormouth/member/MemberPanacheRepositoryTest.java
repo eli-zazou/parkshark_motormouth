@@ -4,10 +4,13 @@ import be.motormouth.member.entities.Address;
 import be.motormouth.member.entities.LicensePlate;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
+import be.motormouth.security.users.UserRepository;
+import groovyjarjarantlr4.v4.runtime.TokenStreamRewriter;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberPanacheRepositoryTest {
     @Inject
     MemberPanacheRepository memberRepository;
+    @Inject
+    UserRepository userRepository;
 
 //    @BeforeEach
 //    public void clearDatabase() {
@@ -32,6 +37,8 @@ class MemberPanacheRepositoryTest {
     void getAllMembers() {
 
         List<Member> members = memberRepository.getAllMembers();
+
+
 
         assertEquals(3, members.size());
         //expected 4 after creating a new member
@@ -48,6 +55,7 @@ class MemberPanacheRepositoryTest {
 
 
     @Test
+    @Transactional
     void createMember() {
 
         Member newMember = new Member("Carmen", "Lastname", "0452635241", "carmen@email.be",
@@ -61,6 +69,7 @@ class MemberPanacheRepositoryTest {
         assertEquals("Carmen", getNewMember.get().getFirstName());
 
         memberRepository.delete(newMember);
+        //userRepository.delete("userId", "username");
 
     }
 
