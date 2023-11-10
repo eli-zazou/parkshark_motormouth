@@ -348,5 +348,5 @@ If you want to modify the class diagram :
 
 Here is class diagram :
 
-![current diagram](class_diagram_parkshark_final_version.jpg)
+![current diagram](class_diagram_parkshark_final_version.jpeg)
 >>>>>>> 1f3ca851bf316f710c5c306aaccb6cef74fe3c9f
