@@ -3,9 +3,14 @@ package be.motormouth.member.services;
 import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDtoSpecificFields;
+import be.motormouth.member.dto.UpdateMembershipDto;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
 
+import be.motormouth.security.users.User;
+import be.motormouth.security.users.UserMapper;
+import be.motormouth.security.users.UserRepository;
+import be.motormouth.security.users.UserRole;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
@@ -24,12 +29,15 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberPanacheRepository memberRepository;
-
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final Logger logger = Logger.getLogger(MemberService.class);
     private String errorMessage;
 
-    public MemberService(MemberPanacheRepository memberPanacheRepository){
+    public MemberService(MemberPanacheRepository memberPanacheRepository, UserRepository userRepository, UserMapper userMapper){
         this.memberRepository = memberPanacheRepository;
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     public List<Member> getAllMembers(){
@@ -64,6 +72,7 @@ public class MemberService {
 
         Member memberToRegister = MemberMapper.toEntity(createMemberDto);
         memberRepository.createMember( memberToRegister);
+        userRepository.addUser(userMapper.toUser(createMemberDto, UserRole.MEMBER, memberToRegister));
         logger.info("Member created successfully");
 
         return memberToRegister;
@@ -142,8 +151,12 @@ public class MemberService {
             logger.info(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
+        validateMembershipLevel(createMemberDto.getMembershipLevel());
+    }
+
+    private void validateMembershipLevel(MembershipLevel membershipLevel) {
         try {
-            MembershipLevel.valueOf(String.valueOf(createMemberDto.getMembershipLevel()));
+            MembershipLevel.valueOf(String.valueOf(membershipLevel));
         }catch (IllegalArgumentException exception){
             errorMessage = "Invalid Membership Level provided.";
             logger.info(errorMessage);
@@ -151,4 +164,15 @@ public class MemberService {
         }
     }
 
+    public String updateMembership(UpdateMembershipDto updateMembershipDto, Member member) {
+        if( updateMembershipDto.membershipLevel() == null){
+            errorMessage = "Membership level not provided";
+            logger.info(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+        validateMembershipLevel(updateMembershipDto.membershipLevel());
+        Member memberToUpdate = getMemberById(member.getId());
+        memberToUpdate.setMembershipLevel(updateMembershipDto.membershipLevel());
+        return "Membership Level updated from " + member.getMembershipLevel() + " to " + memberToUpdate.getMembershipLevel();
+    }
 }

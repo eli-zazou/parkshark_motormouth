@@ -3,10 +3,11 @@ package be.motormouth.member;
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDto;
 import be.motormouth.member.dto.MemberDtoSpecificFields;
-import be.motormouth.member.entities.MembershipLevel;
+import be.motormouth.member.dto.UpdateMembershipDto;
 import be.motormouth.member.services.MemberMapper;
 import be.motormouth.member.services.MemberService;
 import be.motormouth.security.SecurityService;
+import be.motormouth.security.users.User;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,8 +16,7 @@ import org.jboss.resteasy.reactive.RestHeader;
 
 import java.util.List;
 
-import static be.motormouth.security.Feature.VIEW_ALL_MEMBERS;
-import static be.motormouth.security.Feature.VIEW_A_MEMBER;
+import static be.motormouth.security.Feature.*;
 
 @Path("/members")
 @Produces(MediaType.APPLICATION_JSON)
@@ -49,6 +49,13 @@ public class MemberController {
     }
 
     // todo can we update our membership level??
+    @PUT
+    @Path("/membershipLevel")
+    @ResponseStatus(200)
+    public String updateMembership(@RestHeader String authorization, UpdateMembershipDto updateMembershipDto){
+        User user = securityService.validateAuthorization(authorization, CHANGE_MEMBERSHIP_LVL);
+        return memberService.updateMembership(updateMembershipDto, user.getMember());
+    }
 
     @GET
     @Path("/specificFields")
