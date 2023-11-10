@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -38,19 +39,21 @@ public class InvoiceService {
 
     public Invoice getMonthlyInvoice(User authorisedUser) {
         LocalDateTime invoiceDate = calculateInvoiceDate();
+        // return exisitng invoice when exists
+        Optional<Invoice> existingInvoice = invoicePanacheRepository.findInvoice(authorisedUser.getMember(), invoiceDate);
+        if (existingInvoice.isPresent()) return existingInvoice.get();
         //
         if (getAllOpenAllocations(invoiceDate, authorisedUser.getMember()).isEmpty()) throw new IllegalArgumentException("Nothing to Invoice");
-        Invoice invoice = new Invoice(invoiceDate, authorisedUser.getMember(), LocalDate.now(), LocalDate.now().plusDays(30), InvoiceStatus.OPEN, null);
         //
+        Invoice invoice = new Invoice(invoiceDate, authorisedUser.getMember(), LocalDate.now(), LocalDate.now().plusDays(30), InvoiceStatus.OPEN, null);
         invoice.setInvoiceItems(getAllInvoiceItems(invoice));
-        return null;
+        invoicePanacheRepository.createInvoice(invoice);
+        return invoice;
     }
 
     private static LocalDateTime calculateInvoiceDate() {
         YearMonth calculation = YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonth().minus(1));
-        LocalDateTime invoiceDate = calculation.atEndOfMonth().atStartOfDay();
-        invoiceDate.plusSeconds(86399); // set time to 23:59:59
-        return invoiceDate;
+        return calculation.atEndOfMonth().atStartOfDay();
     }
 
     private List<InvoiceItem> getAllInvoiceItems(Invoice invoice) {
@@ -61,7 +64,9 @@ public class InvoiceService {
     }
 
     private double calculatePrice(Allocation allocation) {
-        double roundedUpDuration = Math.ceil(allocation.calculateDuration().toHours());
+        double duration = (double) allocation.calculateDuration().toMinutes() / 60;
+        int roundedUpDuration = (int) (allocation.calculateDuration().toMinutes() / 60);
+        if ((duration - roundedUpDuration) > 0 ) roundedUpDuration++;
         double pricePerHour = allocation.getParkingLot().getPricePerHourInEuro();
         double reductionPerentage = 1 - (allocation.getMember().getMembershipLevel().getReductionInPercentage() / 100);
         double monthlyCost = allocation.getMember().getMembershipLevel().getMonthlyCost();
@@ -69,6 +74,13 @@ public class InvoiceService {
         if (roundedUpDuration > allocation.getMember().getMembershipLevel().getMaxAllocationTimeInHour()) {
             fine = (roundedUpDuration - allocation.getMember().getMembershipLevel().getMaxAllocationTimeInHour()) * FINE_EXCEEDING_TIME_LIMIT;
         }
+//        logger.info("Duration:" + duration);
+//        logger.info("Rounded Duration:" + roundedUpDuration);
+//        logger.info("price:" + pricePerHour);
+//        logger.info("reduction:" + reductionPerentage + " -> " + allocation.getMember().getMembershipLevel().getReductionInPercentage() + "%");
+//        logger.info("Cost:" + monthlyCost);
+//        logger.info("fine:" + fine);
+        allocation.setAllocationStatus(AllocationStatus.INVOICED);
         return (roundedUpDuration * (pricePerHour * reductionPerentage)) + fine + monthlyCost;
     }
     private List<Allocation> getAllOpenAllocations(LocalDateTime invoiceDate, Member member) {
@@ -81,11 +93,10 @@ public class InvoiceService {
                 .toList();
     }
 
-    public Collection<Invoice> getAll() {
+    public Collection<Invoice> getAllInvoices() {
         return invoicePanacheRepository.getAllInvoices();
     }
 
-    @Transactional
     public void markAsClosed(String invoiceId) {
         Invoice invoice = invoicePanacheRepository.findInvoiceById(Long.parseLong(invoiceId)).orElseThrow(NotFoundException::new);
         if (invoice.getInvoiceStatus() != InvoiceStatus.OPEN)

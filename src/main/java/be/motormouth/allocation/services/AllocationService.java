@@ -129,6 +129,23 @@ public class AllocationService {
         parkingLot.setNumberOfPlacesAvailable(parkingLot.getNumberOfPlacesAvailable() + 1);
     }
 
+    public Collection<Allocation> viewAllocationsByParkingLot(Long parkingLotId, String filter) {
+        //ParkingLot parkingLot = parkingLotService.getParkingLot(parkingLotId);
+        switch(filter){
+            case "all":
+                return allocationPanacheRepository.getAllocationsByParkingLot(parkingLotId);
+            case "active":
+                return allocationPanacheRepository.getActiveAllocationsByParkingLot(parkingLotId);
+            case "stopped":
+                return allocationPanacheRepository.getStoppedAllocationsByParkingLot(parkingLotId);
+            default:
+                throw new IllegalArgumentException("Invalid filter: " + filter);
+
+
+        }
+
+    }
+
     public Collection<Allocation> getAllocationsForMember(Long id) {
         memberService.getMemberById(id);
         return allocationPanacheRepository.getAllAllocationsForMemberId(id);

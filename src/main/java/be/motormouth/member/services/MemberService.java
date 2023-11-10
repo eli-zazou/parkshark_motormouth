@@ -2,6 +2,7 @@ package be.motormouth.member.services;
 
 import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
+import be.motormouth.member.dto.MemberDtoSpecificFields;
 import be.motormouth.member.entities.Member;
 import be.motormouth.member.entities.MembershipLevel;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 @ApplicationScoped
@@ -32,6 +34,23 @@ public class MemberService {
 
     public List<Member> getAllMembers(){
         return memberRepository.getAllMembers();
+    }
+
+    public List<MemberDtoSpecificFields> getAllMembersSpecificFields(){
+        List<Member> members= memberRepository.getAllMembers();
+        return members.stream()
+                .map(member -> new MemberDtoSpecificFields(
+                        member.getId(),
+                        member.getFirstName(),
+                        member.getLastName(),
+                        member.getLicencePlate().getLicensePlateNumber(),
+                        member.getPhoneNumber(),
+                        member.getEmailAddress(),
+                        member.getRegistrationDate()
+                )).collect(Collectors.toList());
+
+
+
     }
 
     public Member getMemberById(Long id) {
@@ -131,9 +150,5 @@ public class MemberService {
             throw new IllegalArgumentException(errorMessage);
         }
     }
-
-
-
-
 
 }
