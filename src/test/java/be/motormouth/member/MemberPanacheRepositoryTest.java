@@ -60,6 +60,8 @@ class MemberPanacheRepositoryTest {
         assertTrue(getNewMember.isPresent());
         assertEquals("Carmen", getNewMember.get().getFirstName());
 
+        memberRepository.delete(newMember);
+
     }
 
 
