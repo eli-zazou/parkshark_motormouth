@@ -97,12 +97,13 @@ public class InvoiceService {
         return invoicePanacheRepository.getAllInvoices();
     }
 
-    public void markAsClosed(String invoiceId) {
+    public Invoice markAsClosed(String invoiceId) {
         Invoice invoice = invoicePanacheRepository.findInvoiceById(Long.parseLong(invoiceId)).orElseThrow(NotFoundException::new);
         if (invoice.getInvoiceStatus() != InvoiceStatus.OPEN)
             throw new AlreadyClosedInvoiceException(
                     "Invoice with id \"" + invoice.getId() + "\" belonging to " + invoice.getMember().getFirstName() + " " + invoice.getMember().getLastName()
             + " is already closed.");
         invoice.setInvoiceStatus(InvoiceStatus.CLOSED);
+        return invoice;
     }
 }

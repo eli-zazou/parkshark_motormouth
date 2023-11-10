@@ -184,4 +184,27 @@ insert into allocation(id,
                        status)
 values (nextval('allocation_seq'), '2023-10-07 15:20:10.226726', '2023-10-08 09:26:26.226726', '1-ABC-111', 2, 1, 'NOT_YET_INVOICED');
 
+--Invoice
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-03', '2023-02-04', 'OPEN', '2023-02-03', 1);
 
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-05', '2023-02-06', 'CLOSED', '2023-02-05', 2);
+
+insert into invoice(id,
+                    creationdate,
+                    expirationdate,
+                    status,
+                    invoicedate,
+                    fk_member_id)
+values (nextval('invoice_seq'), '2023-02-07', '2023-02-08', 'OPEN', '2023-02-07', 3);

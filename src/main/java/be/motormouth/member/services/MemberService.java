@@ -1,5 +1,6 @@
 package be.motormouth.member.services;
 
+import be.motormouth.globalservices.validation.EmailValidator;
 import be.motormouth.member.MemberPanacheRepository;
 import be.motormouth.member.dto.CreateMemberDto;
 import be.motormouth.member.dto.MemberDtoSpecificFields;
@@ -78,14 +79,6 @@ public class MemberService {
         return memberToRegister;
     }
 
-    public boolean isValidEmail(String email) {
-        String EMAIL_REGEX =
-                "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
     private String validateEmail(String email) throws IllegalArgumentException {
         if (email == null || email.trim().isEmpty()) {
             errorMessage= "Email address cannot be empty or null.";
@@ -101,7 +94,7 @@ public class MemberService {
             logger.info(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
-        if (!isValidEmail(email)) {
+        if (!EmailValidator.isEmailValid(email)) {
             errorMessage = "Email " + email + " not valid";
             logger.info(errorMessage);
             throw new IllegalArgumentException(errorMessage);
