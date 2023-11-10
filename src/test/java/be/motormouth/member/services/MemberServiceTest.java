@@ -69,6 +69,7 @@ class MemberServiceTest {
         assertTrue(getNewMember.isPresent());
         assertEquals("Carmen", getNewMember.get().getFirstName());
 
+        memberRepository.delete("emailAddress", "carmen@email.be");
     }
 
     @Test

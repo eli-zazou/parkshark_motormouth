@@ -28,6 +28,9 @@ import static org.hamcrest.Matchers.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MemberControllerTest {
 
+    @Inject
+    MemberPanacheRepository memberRepository;
+
     @Test
     @Order(1)
     void getAllMembers_withoutAuthorization(){
@@ -134,5 +137,7 @@ class MemberControllerTest {
                 .body("firstName", equalTo("oui"))
                 .body("registrationDate", equalTo(String.valueOf(LocalDate.now())))
                 .statusCode(201);
+
+        memberRepository.delete("emailAddress", "taxi@gmail.com");
     }
 }
