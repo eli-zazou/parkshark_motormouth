@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import static be.motormouth.testConstants.AllocationTestConstants.ALLOCATION_1;
 import static be.motormouth.testConstants.ParkingLotTestConstants.PARKING_LOT_1;
 import static be.motormouth.testConstants.UserTestConstants.USER_SILVER;
+import static org.mockito.ArgumentMatchers.refEq;
 
 class AllocationServiceTest {
     private AllocationPanacheRepository allocationPanacheRepository;
@@ -29,21 +30,23 @@ class AllocationServiceTest {
     }
 
     @Test
-    void startAllocation() {
+    void startAllocation_givenCreateAllocationDto_thenAllocationIsSavedToRepoAndReturned() {
         // given
         CreateAllocationDto createAllocationDto = new CreateAllocationDto(
-                PARKING_LOT_1.getId(),
+                1L,
                 USER_SILVER.getMember().getLicencePlate().getLicensePlateNumber());
-
-        Mockito.when(parkingLotService.getParkingLot(createAllocationDto.parkingLotId())).thenReturn(PARKING_LOT_1);
-        Mockito.when(allocationPanacheRepository.createAllocation(ALLOCATION_1)).thenReturn(ALLOCATION_1);
+        Mockito.when(parkingLotService.getParkingLot(1L)).thenReturn(PARKING_LOT_1);
+        Mockito.when(allocationPanacheRepository.createAllocation(refEq(ALLOCATION_1, "startTime"))).thenReturn(ALLOCATION_1);
 
         // when
         Allocation actualAllocation = allocationService.startAllocation(createAllocationDto, USER_SILVER);
 
         // then
+        Mockito.verify(allocationPanacheRepository).createAllocation(actualAllocation);
         Assertions
                 .assertThat(actualAllocation)
+                .usingRecursiveComparison()
+                .ignoringFields("startTime")
                 .isEqualTo(ALLOCATION_1);
     }
 }
